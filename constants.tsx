@@ -4,9 +4,8 @@ import { Instagram, Youtube, CloudLightning, Globe } from 'lucide-react';
 export const NAV_LINKS: NavLink[] = [
   { label: 'EVENTS', to: '/events' },
   { label: 'TICKETS', to: '/tickets' },
-  { label: 'SHOP', to: '/shop' },
   { label: 'LABEL', to: '/label' },
-  { label: 'BLOG', to: '/blog' },
+  { label: 'GALLERY', to: '/gallery' },
   { label: 'RESIDENTS', to: '/residents' },
   { label: 'ABOUT', to: '/about' },
 ];
@@ -15,10 +14,10 @@ export const NAV_LINKS: NavLink[] = [
 export const HERO_CTA_LINKS: NavLink[] = [
   { label: 'EVENTS', to: '/events' },
   { label: 'TICKETS', to: '/tickets' },
-  { label: 'SHOP', to: '/shop' },
   { label: 'LABEL', to: '/label' },
-  { label: 'BLOG', to: '/blog' },
+  { label: 'GALLERY', to: '/gallery' },
   { label: 'RESIDENTS', to: '/residents' },
+  { label: 'ABOUT', to: '/about' },
 ];
 
 export const SOCIAL_LINKS: SocialLink[] = [

@@ -7,6 +7,7 @@ import BlogDetail from './src/pages/BlogDetail';
 import Events from './src/pages/Events';
 import EventDetail from './src/pages/EventDetail';
 import Home from './src/pages/Home';
+import Gallery from './src/pages/Gallery';
 import Label from './src/pages/Label';
 import LabelDetail from './src/pages/LabelDetail';
 import Residents from './src/pages/Residents';
@@ -23,6 +24,7 @@ const App: React.FC = () => {
           <Route path="events" element={<Events />} />
           <Route path="events/:slug" element={<EventDetail />} />
           <Route path="tickets" element={<Tickets />} />
+          <Route path="gallery" element={<Gallery />} />
           <Route path="shop" element={<Shop />} />
           <Route path="label" element={<Label />} />
           <Route path="label/:slug" element={<LabelDetail />} />

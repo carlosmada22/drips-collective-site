@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { UPCOMING_EVENTS } from '../constants';
 import { Event } from '../types';
+import Marquee from './Marquee';
 
 const EventCard: React.FC<{ event: Event }> = ({ event }) => {
   return (
@@ -36,6 +37,8 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
 };
 
 const EventsSection: React.FC = () => {
+  const eventTitles = UPCOMING_EVENTS.map((event) => event.title);
+
   return (
     <section id="events" className="relative w-full min-h-[75vh] py-24 flex items-center bg-black">
       
@@ -49,20 +52,34 @@ const EventsSection: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-90"></div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-start">
-          {UPCOMING_EVENTS.map(event => (
-            <EventCard key={event.id} event={event} />
-          ))}
+      <div className="relative z-10 w-full">
+        <div className="container mx-auto px-6 md:px-12 mb-12 text-center">
+          <h2 className="text-2xl font-heading tracking-widest uppercase">OUR EVENTS</h2>
         </div>
-        
-        <div className="mt-16 text-center">
-          <Link
-            to="/events"
-            className="inline-block border-b border-white pb-1 text-sm tracking-widest hover:text-gray-400 transition-colors uppercase"
-          >
-            View All Events
-          </Link>
+
+        <div className="relative w-screen left-1/2 -translate-x-1/2 mb-20">
+          <Marquee
+            items={eventTitles}
+            linkTo="/events"
+            animationClassName="animate-marquee-fast"
+          />
+        </div>
+
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-start">
+            {UPCOMING_EVENTS.map(event => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </div>
+          
+          <div className="mt-16 text-center">
+            <Link
+              to="/events"
+              className="inline-block border-b border-white pb-1 text-sm tracking-widest hover:text-gray-400 transition-colors uppercase"
+            >
+              View All Events
+            </Link>
+          </div>
         </div>
       </div>
     </section>

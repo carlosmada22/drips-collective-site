@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RESIDENTS, RESIDENT_MARQUEE_NAMES } from '../constants';
+import { RESIDENTS } from '../constants';
 
 const ResidentsSection: React.FC = () => {
   return (
@@ -8,26 +8,7 @@ const ResidentsSection: React.FC = () => {
       
       {/* Section Title */}
       <div className="container mx-auto px-6 mb-16 text-center">
-        <h2 className="text-2xl font-heading tracking-widest uppercase">Our Residents</h2>
-      </div>
-
-      {/* Marquee */}
-      <div className="relative w-full mb-20 py-8 border-y border-white/10 bg-white/5">
-        <div className="overflow-hidden whitespace-nowrap">
-          <div className="animate-marquee inline-block">
-            {RESIDENT_MARQUEE_NAMES.map((name, index) => (
-              <span key={`${name}-${index}`} className="text-6xl md:text-8xl font-heading font-bold uppercase tracking-widest mx-8 md:mx-16 text-transparent stroke-text opacity-50 hover:opacity-100 transition-opacity duration-300" style={{ WebkitTextStroke: '1px white' }}>
-                {name} •
-              </span>
-            ))}
-            {/* Duplicate for seamless loop */}
-            {RESIDENT_MARQUEE_NAMES.map((name, index) => (
-              <span key={`${name}-${index}-dup`} className="text-6xl md:text-8xl font-heading font-bold uppercase tracking-widest mx-8 md:mx-16 text-transparent stroke-text opacity-50 hover:opacity-100 transition-opacity duration-300" style={{ WebkitTextStroke: '1px white' }}>
-                {name} •
-              </span>
-            ))}
-          </div>
-        </div>
+        <h2 className="text-2xl font-heading tracking-widest uppercase">OUR RESIDENTS</h2>
       </div>
 
       {/* Residents Grid */}
@@ -54,6 +35,14 @@ const ResidentsSection: React.FC = () => {
               </Link>
             </div>
           ))}
+        </div>
+        <div className="mt-16 text-center">
+          <Link
+            to="/residents"
+            className="inline-block border-b border-white pb-1 text-sm tracking-widest hover:text-gray-400 transition-colors uppercase"
+          >
+            View All Residents
+          </Link>
         </div>
       </div>
 

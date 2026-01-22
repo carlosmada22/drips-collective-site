@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from './ui/Button';
 import { SOCIAL_LINKS } from '../constants';
+import footerBg from '../src/assets/footer-bg.jpg';
 
 const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -21,12 +22,12 @@ const Footer: React.FC = () => {
       
       {/* Background with heavy overlay */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src="https://picsum.photos/1920/800?grayscale&blur=4" 
-          alt="Footer background" 
-          className="w-full h-full object-cover opacity-20"
+        <img
+          src={footerBg}
+          alt="Footer background"
+          className="w-full h-full object-cover opacity-40"
         />
-        <div className="absolute inset-0 bg-black/80"></div>
+        <div className="absolute inset-0 bg-black/60"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent"></div>
       </div>
 
@@ -34,7 +35,7 @@ const Footer: React.FC = () => {
         
         {/* Newsletter */}
         <div className="w-full max-w-xl mb-20">
-          <h3 className="text-2xl font-heading uppercase tracking-widest mb-4">Subscribe to our Newsletter</h3>
+          <h3 className="text-2xl font-heading uppercase tracking-widest mb-4">SUBSCRIBE TO OUR NEWSLETTER</h3>
           <p className="text-gray-400 text-sm mb-8 tracking-wide">
             Be the first to know about upcoming warehouse events and releases.
           </p>
