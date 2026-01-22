@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { NAV_LINKS, SOCIAL_LINKS } from '../constants';
 import OverlayMenu from './OverlayMenu';
+// @ts-ignore: imported image has no type declarations
 import IsoWhite from "../src/assets/logos/ISOTIPO-BLANCO.png";
+// @ts-ignore: imported image has no type declarations
 import Logo4 from "../src/assets/logos/LOGO4.png";
 
 const OVERLAY_MENU_ID = 'site-overlay-menu';

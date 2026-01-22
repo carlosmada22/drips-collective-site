@@ -17,6 +17,8 @@ DRIPS is a Vite + React + TypeScript + Tailwind site for the DRIPS collective, f
 ├── hooks/               # Custom React hooks
 ├── src/
 │   ├── assets/          # Images and static assets
+         ├── logos/          # Logos and icons
+│   ├── styles/          # Global styles and theme
 │   └── pages/           # Route-level pages
 ├── App.tsx              # App routes
 ├── constants.tsx        # Navigation + mock data
