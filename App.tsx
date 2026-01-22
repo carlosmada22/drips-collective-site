@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import IntroLoader from './components/IntroLoader';
 import Shell from './components/Shell';
 import About from './src/pages/About';
 import Blog from './src/pages/Blog';
@@ -15,9 +16,32 @@ import ResidentDetail from './src/pages/ResidentDetail';
 import Shop from './src/pages/Shop';
 import Tickets from './src/pages/Tickets';
 
+const INTRO_STORAGE_KEY = 'drips-intro-loader-seen';
+
 const App: React.FC = () => {
+  const [showIntro, setShowIntro] = useState(() => {
+    if (typeof window === 'undefined') {
+      return false;
+    }
+    try {
+      return sessionStorage.getItem(INTRO_STORAGE_KEY) !== 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const handleIntroDone = () => {
+    try {
+      sessionStorage.setItem(INTRO_STORAGE_KEY, 'true');
+    } catch {
+      // Ignore storage failures and just proceed.
+    }
+    setShowIntro(false);
+  };
+
   return (
     <BrowserRouter>
+      {showIntro && <IntroLoader onDone={handleIntroDone} />}
       <Routes>
         <Route element={<Shell />}>
           <Route index element={<Home />} />
