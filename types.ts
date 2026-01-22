@@ -20,6 +20,8 @@ export interface Event {
   dayNumber: string;
   coverImageUrl: string;
   slug: string;
+  location?: string;
+  ticketUrl?: string;
 }
 
 export interface Resident {
