@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { NAV_LINKS, SOCIAL_LINKS } from '../constants';
 import OverlayMenu from './OverlayMenu';
+import IsoWhite from "../src/assets/logos/ISOTIPO-BLANCO.png";
+import Logo4 from "../src/assets/logos/LOGO4.png";
 
 const OVERLAY_MENU_ID = 'site-overlay-menu';
 
@@ -46,19 +48,18 @@ const Header: React.FC = () => {
           {/* Logo */}
           <div className="z-50 relative">
             <Link to="/" className="flex items-center gap-2 group" aria-label="DRIPS home">
-              {/* Minimal SVG Logo Placeholder */}
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 100 100"
-                className="fill-white transition-opacity duration-300 group-hover:opacity-80"
-                aria-hidden="true"
-              >
-                <rect x="20" y="20" width="60" height="60" rx="0" fill="white" />
-                <rect x="35" y="35" width="30" height="30" fill="black" />
-              </svg>
-              <span className="font-heading text-xl tracking-widest font-bold hidden sm:block">DRIPS</span>
+              <img
+                src={IsoWhite}
+                alt="DRIPS icon"
+                className="h-8 w-8 object-contain transition-opacity duration-300 group-hover:opacity-80"
+              />
+              <img
+                src={Logo4}
+                alt="DRIPS"
+                className="h-6 sm:h-7 object-contain transition-opacity duration-300 group-hover:opacity-80"
+              />
             </Link>
+
           </div>
 
           {/* Desktop Nav */}
