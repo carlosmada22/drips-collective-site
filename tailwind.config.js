@@ -12,6 +12,9 @@ export default {
         'drips-dark': '#0a0a0a',
         'drips-gray': '#1a1a1a',
       },
+      fontFamily: {
+        body: ['"Bebas Neue"', 'sans-serif'],
+      },
       letterSpacing: {
         'widest-plus': '0.2em',
       },

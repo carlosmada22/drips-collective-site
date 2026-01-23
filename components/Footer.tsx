@@ -1,12 +1,77 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from './ui/Button';
 import { SOCIAL_LINKS } from '../constants';
-import footerBg from '../src/assets/footer-bg.jpg';
+import footerBg from '../src/assets/bg/3h.png';
 import Reveal from './Reveal';
 
 const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const footerRef = useRef<HTMLElement>(null);
+  const backgroundRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const footer = footerRef.current;
+    const background = backgroundRef.current;
+
+    if (!footer || !background || prefersReducedMotion) {
+      return;
+    }
+
+    let frameId = 0;
+    let isInView = false;
+    const maxShift = 60;
+
+    const updatePosition = () => {
+      if (!footer || !background) {
+        return;
+      }
+
+      const rect = footer.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || 0;
+      const progress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
+      const clamped = Math.min(1, Math.max(0, progress));
+      const translateY = (clamped - 0.5) * maxShift;
+
+      background.style.transform = `translate3d(0, ${translateY.toFixed(2)}px, 0) scale(1.15)`;
+    };
+
+    const onScroll = () => {
+      if (!isInView || frameId) {
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(() => {
+        frameId = 0;
+        updatePosition();
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isInView = entry.isIntersecting;
+        if (isInView) {
+          updatePosition();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(footer);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    updatePosition();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (frameId) {
+        window.cancelAnimationFrame(frameId);
+      }
+    };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,14 +84,14 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="relative bg-black text-white pt-24 pb-12 overflow-hidden">
+    <footer ref={footerRef} className="relative bg-black text-white pt-24 pb-12 overflow-hidden">
       
       {/* Background with heavy overlay */}
       <div className="absolute inset-0 z-0">
-        <img
-          src={footerBg}
-          alt="Footer background"
-          className="w-full h-full object-cover opacity-40"
+        <div
+          ref={backgroundRef}
+          className="absolute -inset-6 bg-cover bg-center opacity-80 blur-[6px] transform-gpu"
+          style={{ backgroundImage: `url(${footerBg})`, transform: 'scale(1.15)' }}
         />
         <div className="absolute inset-0 bg-black/60"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent"></div>
@@ -37,7 +102,7 @@ const Footer: React.FC = () => {
         {/* Newsletter */}
         <Reveal as="div" className="w-full max-w-xl mb-20">
           <h3 className="text-2xl font-heading uppercase tracking-widest mb-4">SUBSCRIBE TO OUR NEWSLETTER</h3>
-          <p className="text-gray-400 text-sm mb-8 tracking-wide">
+          <p className="text-gray-400 text-sm mb-8 tracking-wide font-body">
             Be the first to know about upcoming warehouse events and releases.
           </p>
           
@@ -57,7 +122,11 @@ const Footer: React.FC = () => {
               <Button type="submit" label="Sign Up" variant="solid" />
             </form>
           )}
-          {status === 'error' && <p className="mt-2 text-red-500 text-xs uppercase tracking-wide">Please enter a valid email.</p>}
+          {status === 'error' && (
+            <p className="mt-2 text-red-500 text-xs uppercase tracking-wide font-body">
+              Please enter a valid email.
+            </p>
+          )}
         </Reveal>
 
         {/* Socials */}

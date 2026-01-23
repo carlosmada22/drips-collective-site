@@ -1,26 +1,28 @@
 ﻿import React from 'react';
-import aboutBg from '../assets/footer-bg.jpg';
+import aboutBg from '../assets/bg/1v.png';
+import galleryImage from '../assets/footer-bg.jpg';
 import Reveal from '../../components/Reveal';
 
 const About: React.FC = () => {
   const galleryImages = [
-    { src: aboutBg, alt: 'Gallery image 1', height: 'h-72 md:h-80' },
-    { src: aboutBg, alt: 'Gallery image 2', height: 'h-64 md:h-72' },
-    { src: aboutBg, alt: 'Gallery image 3', height: 'h-80 md:h-96' },
-    { src: aboutBg, alt: 'Gallery image 4', height: 'h-60 md:h-72' },
-    { src: aboutBg, alt: 'Gallery image 5', height: 'h-72 md:h-80' },
-    { src: aboutBg, alt: 'Gallery image 6', height: 'h-64 md:h-72' },
-    { src: aboutBg, alt: 'Gallery image 7', height: 'h-80 md:h-96' },
-    { src: aboutBg, alt: 'Gallery image 8', height: 'h-60 md:h-72' },
-    { src: aboutBg, alt: 'Gallery image 9', height: 'h-72 md:h-80' },
-    { src: aboutBg, alt: 'Gallery image 10', height: 'h-64 md:h-72' },
+    { src: galleryImage, alt: 'Gallery image 1', height: 'h-72 md:h-80' },
+    { src: galleryImage, alt: 'Gallery image 2', height: 'h-64 md:h-72' },
+    { src: galleryImage, alt: 'Gallery image 3', height: 'h-80 md:h-96' },
+    { src: galleryImage, alt: 'Gallery image 4', height: 'h-60 md:h-72' },
+    { src: galleryImage, alt: 'Gallery image 5', height: 'h-72 md:h-80' },
+    { src: galleryImage, alt: 'Gallery image 6', height: 'h-64 md:h-72' },
+    { src: galleryImage, alt: 'Gallery image 7', height: 'h-80 md:h-96' },
+    { src: galleryImage, alt: 'Gallery image 8', height: 'h-60 md:h-72' },
+    { src: galleryImage, alt: 'Gallery image 9', height: 'h-72 md:h-80' },
+    { src: galleryImage, alt: 'Gallery image 10', height: 'h-64 md:h-72' },
   ];
 
   return (
-    <section
-      className="relative bg-cover bg-center text-white"
-      style={{ backgroundImage: `url(${aboutBg})` }}
-    >
+    <section className="relative text-white overflow-hidden">
+      <div
+        className="absolute -inset-6 bg-cover bg-center bg-fixed blur-[6px] scale-[1.18] transform-gpu"
+        style={{ backgroundImage: `url(${aboutBg})` }}
+      />
       <div className="absolute inset-0 bg-black/60"></div>
       <div className="relative z-10 container mx-auto px-6 md:px-12 py-20 md:py-28">
         <Reveal as="div" className="text-center">
@@ -28,7 +30,7 @@ const About: React.FC = () => {
           <div className="mx-auto mt-4 h-px w-24 bg-white/70"></div>
         </Reveal>
 
-        <div className="mt-10 mx-auto max-w-4xl text-left space-y-6 text-base md:text-lg leading-relaxed text-white/90">
+        <div className="mt-10 mx-auto max-w-4xl text-left space-y-6 text-base md:text-lg leading-relaxed text-white/90 font-body text-justify tracking-wide">
           <Reveal as="p" delay={0}>
             Born in Berlin, DRIPS is a meeting point of disciplines. We create audiovisual works,
             events, and urban interventions that explore the sensory and the conceptualâ€”through a

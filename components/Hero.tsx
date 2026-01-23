@@ -1,27 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from './ui/Button';
-import { HERO_CTA_LINKS, HERO_VIDEO_URL } from '../constants';
+import { HERO_CTA_LINKS } from '../constants';
 import Reveal from './Reveal';
+import heroVideoMp4 from '../src/assets/videos/entre_risas.mp4';
+import heroFallback from '../src/assets/bg/3h.png';
 
 const Hero: React.FC = () => {
+  const [videoFailed, setVideoFailed] = useState(false);
+
   return (
     <section className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
       
       {/* Background Video */}
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover"
-        >
-          <source src={HERO_VIDEO_URL} type="video/mp4" />
-          {/* Fallback image if video fails to load or unsupported */}
-          <img src="https://picsum.photos/1920/1080?grayscale&blur=2" alt="Background" className="w-full h-full object-cover" />
-        </video>
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroFallback})` }}
+        />
+        {!videoFailed && (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            onError={() => setVideoFailed(true)}
+            className="absolute inset-0 w-full h-full object-cover scale-[1.2] blur-[8px] transform-gpu"
+          >
+            <source src={heroVideoMp4} type="video/mp4" />
+          </video>
+        )}
         {/* Overlay */}
-        <div className="absolute inset-0 bg-black opacity-60"></div>
+        <div className="absolute inset-0 bg-black/60"></div>
         {/* Vignette */}
         <div className="absolute inset-0 bg-radial-gradient from-transparent to-black opacity-40 pointer-events-none"></div>
       </div>
