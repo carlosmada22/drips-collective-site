@@ -1,17 +1,17 @@
 import React from 'react';
 import PageHero from '../../components/PageHero';
 
-const Tickets: React.FC = () => {
+const Merch: React.FC = () => {
   return (
     <>
       <PageHero
-        title="TICKETS"
-        description="Secure entry for upcoming DRIPS sessions and special events."
+        title="MERCH"
+        description="Shop DRIPS merch."
       />
       <section className="pb-24 bg-black text-white">
         <div className="container mx-auto px-6 md:px-12">
           <p className="text-gray-300 max-w-2xl">
-            Ticket drops will be posted here with direct links and access codes.
+            Shop DRIPS merch.
           </p>
         </div>
       </section>
@@ -19,4 +19,4 @@ const Tickets: React.FC = () => {
   );
 };
 
-export default Tickets;
+export default Merch;

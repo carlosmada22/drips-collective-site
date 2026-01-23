@@ -8,13 +8,13 @@ import BlogDetail from './src/pages/BlogDetail';
 import Events from './src/pages/Events';
 import EventDetail from './src/pages/EventDetail';
 import Home from './src/pages/Home';
-import Gallery from './src/pages/Gallery';
+import Stream from './src/pages/Stream';
 import Label from './src/pages/Label';
 import LabelDetail from './src/pages/LabelDetail';
 import Residents from './src/pages/Residents';
 import ResidentDetail from './src/pages/ResidentDetail';
 import Shop from './src/pages/Shop';
-import Tickets from './src/pages/Tickets';
+import Merch from './src/pages/Merch';
 
 const INTRO_STORAGE_KEY = 'drips-intro-loader-seen';
 
@@ -47,8 +47,8 @@ const App: React.FC = () => {
           <Route index element={<Home />} />
           <Route path="events" element={<Events />} />
           <Route path="events/:slug" element={<EventDetail />} />
-          <Route path="tickets" element={<Tickets />} />
-          <Route path="gallery" element={<Gallery />} />
+          <Route path="merch" element={<Merch />} />
+          <Route path="stream" element={<Stream />} />
           <Route path="shop" element={<Shop />} />
           <Route path="label" element={<Label />} />
           <Route path="label/:slug" element={<LabelDetail />} />

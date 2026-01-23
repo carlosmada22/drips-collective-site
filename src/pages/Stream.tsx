@@ -1,10 +1,10 @@
 import React from 'react';
 import PageHero from '../../components/PageHero';
 
-const Gallery: React.FC = () => {
+const Stream: React.FC = () => {
   return (
     <>
-      <PageHero title="GALLERY" description="Coming soon." />
+      <PageHero title="STREAM" description="Coming soon." />
       <section className="pb-24 bg-black text-white">
         <div className="container mx-auto px-6 md:px-12">
           <p className="text-gray-300 max-w-2xl">
@@ -16,4 +16,4 @@ const Gallery: React.FC = () => {
   );
 };
 
-export default Gallery;
+export default Stream;

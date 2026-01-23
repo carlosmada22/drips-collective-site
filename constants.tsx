@@ -3,9 +3,9 @@ import { Instagram, Youtube, CloudLightning, Globe } from 'lucide-react';
 
 export const NAV_LINKS: NavLink[] = [
   { label: 'EVENTS', to: '/events' },
-  { label: 'TICKETS', to: '/tickets' },
+  { label: 'MERCH', to: '/merch' },
   { label: 'LABEL', to: '/label' },
-  { label: 'GALLERY', to: '/gallery' },
+  { label: 'STREAM', to: '/stream' },
   { label: 'RESIDENTS', to: '/residents' },
   { label: 'ABOUT', to: '/about' },
 ];
@@ -13,9 +13,9 @@ export const NAV_LINKS: NavLink[] = [
 // Reusing same links for the CTA buttons in Hero
 export const HERO_CTA_LINKS: NavLink[] = [
   { label: 'EVENTS', to: '/events' },
-  { label: 'TICKETS', to: '/tickets' },
+  { label: 'MERCH', to: '/merch' },
   { label: 'LABEL', to: '/label' },
-  { label: 'GALLERY', to: '/gallery' },
+  { label: 'STREAM', to: '/stream' },
   { label: 'RESIDENTS', to: '/residents' },
   { label: 'ABOUT', to: '/about' },
 ];

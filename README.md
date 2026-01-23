@@ -48,9 +48,9 @@ Routes are defined in `App.tsx` and live under `src/pages/`.
 Key routes:
 - `/` Home
 - `/events`
-- `/tickets`
+- `/merch`
 - `/label`
-- `/gallery`
+- `/stream`
 - `/residents`
 - `/about`
 
