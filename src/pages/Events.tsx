@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { EVENTS } from '../../constants';
 import { Event } from '../../types';
-import eventsHero from '../assets/footer-bg.jpg';
+import eventsHero from '../assets/bg/7h.png';
 import Reveal from '../../components/Reveal';
 
 const getEventTime = (event: Event) => {
@@ -68,11 +68,15 @@ const Events: React.FC = () => {
       <section className="relative w-full min-h-[60vh] flex items-center justify-center text-center overflow-hidden">
         <div className="absolute inset-0">
           <img src={eventsHero} alt="Events hero" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/60"></div>
         </div>
 
         <div className="relative z-10 container mx-auto px-6 md:px-12">
-          <h1 className="font-heading text-4xl md:text-6xl tracking-[0.4em] uppercase">EVENTS</h1>
+          <h1
+            className="font-heading text-4xl md:text-6xl tracking-[0.4em] uppercase"
+            style={{ textShadow: '0 4px 18px rgba(0, 0, 0, 0.35)' }}
+          >
+            EVENTS
+          </h1>
         </div>
       </section>
 

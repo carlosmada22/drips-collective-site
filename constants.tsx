@@ -5,7 +5,7 @@ export const NAV_LINKS: NavLink[] = [
   { label: 'EVENTS', to: '/events' },
   { label: 'MERCH', to: '/merch' },
   { label: 'LABEL', to: '/label' },
-  { label: 'STREAM', to: '/stream' },
+  { label: 'STREAMS', to: '/streams' },
   { label: 'RESIDENTS', to: '/residents' },
   { label: 'ABOUT', to: '/about' },
 ];
@@ -15,7 +15,7 @@ export const HERO_CTA_LINKS: NavLink[] = [
   { label: 'EVENTS', to: '/events' },
   { label: 'MERCH', to: '/merch' },
   { label: 'LABEL', to: '/label' },
-  { label: 'STREAM', to: '/stream' },
+  { label: 'STREAMS', to: '/streams' },
   { label: 'RESIDENTS', to: '/residents' },
   { label: 'ABOUT', to: '/about' },
 ];
