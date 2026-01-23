@@ -1,19 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { RESIDENTS } from '../constants';
+import Reveal from './Reveal';
 
 const ResidentsSection: React.FC = () => {
   return (
     <section id="residents" className="bg-black text-white py-24 overflow-hidden w-full">
       
       {/* Section Title */}
-      <div className="container mx-auto px-6 mb-16 text-center">
+      <Reveal as="div" className="container mx-auto px-6 mb-16 text-center">
         <h2 className="text-2xl font-heading tracking-widest uppercase">OUR RESIDENTS</h2>
-      </div>
+      </Reveal>
 
       {/* Residents Grid */}
       <div className="container mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
+        <Reveal as="div" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
           {RESIDENTS.slice(0, 4).map((resident) => (
             <div key={resident.id} className="group flex flex-col items-center">
               <div className="w-full aspect-[3/4] overflow-hidden bg-gray-900 mb-6 relative">
@@ -35,7 +36,7 @@ const ResidentsSection: React.FC = () => {
               </Link>
             </div>
           ))}
-        </div>
+        </Reveal>
         <div className="mt-16 text-center">
           <Link
             to="/residents"

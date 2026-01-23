@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { EVENTS } from '../constants';
 import { Event } from '../types';
 import Marquee from './Marquee';
+import Reveal from './Reveal';
 
 const getEventTime = (event: Event) => {
   const time = Date.parse(event.dateStart);
@@ -61,20 +62,22 @@ const EventsSection: React.FC = () => {
       </div>
 
       <div className="relative z-10 w-full">
-        <div className="container mx-auto px-6 md:px-12 mb-12 text-center">
+        <Reveal as="div" className="container mx-auto px-6 md:px-12 mb-12 text-center">
           <h2 className="text-2xl font-heading tracking-widest uppercase">OUR EVENTS</h2>
-        </div>
+        </Reveal>
 
         <div className="relative w-screen left-1/2 -translate-x-1/2 mb-20">
-          <Marquee items={eventTitles} linkTo="/events" animationClassName="animate-marquee-fast" />
+          <Reveal as="div" amount={0.2}>
+            <Marquee items={eventTitles} linkTo="/events" animationClassName="animate-marquee-fast" />
+          </Reveal>
         </div>
 
         <div className="container mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-start">
+          <Reveal as="div" className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-start">
             {upcomingEvents.map((event) => (
               <EventCard key={event.id} event={event} />
             ))}
-          </div>
+          </Reveal>
 
           <div className="mt-16 text-center">
             <Link

@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.reveal-base {
+  opacity: 0;
+  transform: translateY(0);
+  filter: blur(0);
+  transition: opacity 800ms ease-out, transform 800ms ease-out, filter 800ms ease-out;
+  will-change: opacity, transform, filter;
+}
+
+.reveal-hidden {
+  opacity: 0;
+  filter: blur(2px);
+}
+
+.reveal-up.reveal-hidden {
+  transform: translateY(12px);
+}
+
+.reveal-show {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-base {
+    transition: none;
+    transform: none;
+    filter: none;
+  }
+
+  .reveal-hidden,
+  .reveal-show {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}

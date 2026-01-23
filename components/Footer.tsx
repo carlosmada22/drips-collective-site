@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from './ui/Button';
 import { SOCIAL_LINKS } from '../constants';
 import footerBg from '../src/assets/footer-bg.jpg';
+import Reveal from './Reveal';
 
 const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -34,7 +35,7 @@ const Footer: React.FC = () => {
       <div className="relative z-10 container mx-auto px-6 flex flex-col items-center text-center">
         
         {/* Newsletter */}
-        <div className="w-full max-w-xl mb-20">
+        <Reveal as="div" className="w-full max-w-xl mb-20">
           <h3 className="text-2xl font-heading uppercase tracking-widest mb-4">SUBSCRIBE TO OUR NEWSLETTER</h3>
           <p className="text-gray-400 text-sm mb-8 tracking-wide">
             Be the first to know about upcoming warehouse events and releases.
@@ -57,7 +58,7 @@ const Footer: React.FC = () => {
             </form>
           )}
           {status === 'error' && <p className="mt-2 text-red-500 text-xs uppercase tracking-wide">Please enter a valid email.</p>}
-        </div>
+        </Reveal>
 
         {/* Socials */}
         <div className="flex items-center gap-8 mb-16">

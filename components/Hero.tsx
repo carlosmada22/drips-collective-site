@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from './ui/Button';
 import { HERO_CTA_LINKS, HERO_VIDEO_URL } from '../constants';
+import Reveal from './Reveal';
 
 const Hero: React.FC = () => {
   return (
@@ -27,7 +28,7 @@ const Hero: React.FC = () => {
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 text-center">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <Reveal as="div" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
           {HERO_CTA_LINKS.map((link) => (
             <div key={link.label} className="flex justify-center">
               <Button
@@ -37,7 +38,7 @@ const Hero: React.FC = () => {
               />
             </div>
           ))}
-        </div>
+        </Reveal>
       </div>
 
       {/* Scroll indicator (optional but helpful) */}

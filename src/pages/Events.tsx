@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { EVENTS } from '../../constants';
 import { Event } from '../../types';
 import eventsHero from '../assets/footer-bg.jpg';
+import Reveal from '../../components/Reveal';
 
 const getEventTime = (event: Event) => {
   const time = Date.parse(event.dateStart);
@@ -77,7 +78,9 @@ const Events: React.FC = () => {
 
       <section className="py-20">
         <div className="container mx-auto px-6 md:px-12">
-          <h2 className="text-xl font-heading tracking-[0.35em] uppercase text-gray-200">UPCOMING</h2>
+          <Reveal as="div">
+            <h2 className="text-xl font-heading tracking-[0.35em] uppercase text-gray-200">UPCOMING</h2>
+          </Reveal>
 
           {upcomingEvents.length === 0 ? (
             <p className="mt-8 text-sm text-gray-500 font-mono tracking-wide">
@@ -85,8 +88,10 @@ const Events: React.FC = () => {
             </p>
           ) : (
             <div className="mt-4 divide-y divide-white/10">
-              {upcomingEvents.map((event) => (
-                <EventCard key={event.id} event={event} />
+              {upcomingEvents.map((event, index) => (
+                <Reveal key={event.id} as="div" delay={Math.min(index * 60, 360)}>
+                  <EventCard event={event} />
+                </Reveal>
               ))}
             </div>
           )}
@@ -95,11 +100,15 @@ const Events: React.FC = () => {
 
       <section className="py-20 border-t border-white/10">
         <div className="container mx-auto px-6 md:px-12">
-          <h2 className="text-xl font-heading tracking-[0.35em] uppercase text-gray-200">PAST</h2>
+          <Reveal as="div">
+            <h2 className="text-xl font-heading tracking-[0.35em] uppercase text-gray-200">PAST</h2>
+          </Reveal>
 
           <div className="mt-4 divide-y divide-white/10">
-            {pastEvents.map((event) => (
-              <EventCard key={event.id} event={event} />
+            {pastEvents.map((event, index) => (
+              <Reveal key={event.id} as="div" delay={Math.min(index * 60, 360)}>
+                <EventCard event={event} />
+              </Reveal>
             ))}
           </div>
         </div>
