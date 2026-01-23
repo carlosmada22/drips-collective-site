@@ -1,34 +1,40 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import Button from './ui/Button';
 import { HERO_CTA_LINKS } from '../constants';
 import Reveal from './Reveal';
 import heroVideoMp4 from '../src/assets/videos/entre_risas.mp4';
-import heroFallback from '../src/assets/bg/3h.png';
 
 const Hero: React.FC = () => {
-  const [videoFailed, setVideoFailed] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleVideoEnded = () => {
+    const video = videoRef.current;
+    if (!video) {
+      return;
+    }
+    video.currentTime = 0;
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {});
+    }
+  };
 
   return (
     <section className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
       
       {/* Background Video */}
       <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroFallback})` }}
-        />
-        {!videoFailed && (
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            onError={() => setVideoFailed(true)}
-            className="absolute inset-0 w-full h-full object-cover scale-[1.2] blur-[8px] transform-gpu"
-          >
-            <source src={heroVideoMp4} type="video/mp4" />
-          </video>
-        )}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          onEnded={handleVideoEnded}
+          className="absolute inset-0 w-full h-full object-cover scale-[1.2] blur-[8px] transform-gpu"
+        >
+          <source src={heroVideoMp4} type="video/mp4" />
+        </video>
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/60"></div>
         {/* Vignette */}

@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
 
     let frameId = 0;
     let isInView = false;
-    const maxShift = 60;
+    const maxShift = 40;
 
     const updatePosition = () => {
       if (!footer || !background) {
@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
       const clamped = Math.min(1, Math.max(0, progress));
       const translateY = (clamped - 0.5) * maxShift;
 
-      background.style.transform = `translate3d(0, ${translateY.toFixed(2)}px, 0) scale(1.15)`;
+      background.style.transform = `translate3d(0, ${translateY.toFixed(2)}px, 0) scale(1.35)`;
     };
 
     const onScroll = () => {
@@ -90,11 +90,11 @@ const Footer: React.FC = () => {
       <div className="absolute inset-0 z-0">
         <div
           ref={backgroundRef}
-          className="absolute -inset-6 bg-cover bg-center opacity-80 blur-[6px] transform-gpu"
-          style={{ backgroundImage: `url(${footerBg})`, transform: 'scale(1.15)' }}
+          className="absolute -inset-10 bg-cover bg-center opacity-90 blur-[4px] transform-gpu"
+          style={{ backgroundImage: `url(${footerBg})`, transform: 'scale(1.35)' }}
         />
-        <div className="absolute inset-0 bg-black/60"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent"></div>
+        <div className="absolute inset-0 bg-black/35"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/70 to-transparent"></div>
       </div>
 
       <div className="relative z-10 container mx-auto px-6 flex flex-col items-center text-center">

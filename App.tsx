@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import IntroLoader from './components/IntroLoader';
+import ScrollToTop from './components/ScrollToTop';
 import Shell from './components/Shell';
 import About from './src/pages/About';
 import Blog from './src/pages/Blog';
@@ -42,6 +43,7 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       {showIntro && <IntroLoader onDone={handleIntroDone} />}
+      <ScrollToTop />
       <Routes>
         <Route element={<Shell />}>
           <Route index element={<Home />} />

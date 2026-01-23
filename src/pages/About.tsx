@@ -20,10 +20,11 @@ const About: React.FC = () => {
   return (
     <section className="relative text-white overflow-hidden">
       <div
-        className="absolute -inset-6 bg-cover bg-center bg-fixed blur-[6px] scale-[1.18] transform-gpu"
+        className="absolute -inset-10 bg-cover bg-center bg-fixed blur-[5px] scale-[1.5] transform-gpu"
         style={{ backgroundImage: `url(${aboutBg})` }}
       />
-      <div className="absolute inset-0 bg-black/60"></div>
+      <div className="absolute inset-0 bg-blue-900/25 mix-blend-screen"></div>
+      <div className="absolute inset-0 bg-black/35"></div>
       <div className="relative z-10 container mx-auto px-6 md:px-12 py-20 md:py-28">
         <Reveal as="div" className="text-center">
           <h1 className="font-heading text-3xl md:text-4xl tracking-[0.4em] uppercase">ABOUT US</h1>
