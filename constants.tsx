@@ -13,7 +13,7 @@ import tshirt3 from './src/assets/merch/tshirt/3.png';
 import tshirt4 from './src/assets/merch/tshirt/4.png';
 import maurerPhoto1 from './src/assets/residents/maurer.jpg';
 import voicexPhoto1 from './src/assets/residents/voicex.JPG';
-import voicexPhoto2 from './src/assets/residents/voicex2.JPG';
+import voicexPhoto2 from './src/assets/residents/voicex2.jpg';
 
 export const NAV_LINKS: NavLink[] = [
   { label: 'EVENTS', to: '/events' },
