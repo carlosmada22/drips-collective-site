@@ -75,7 +75,7 @@ const Merch: React.FC = () => {
       <section className="relative w-full min-h-[50vh] flex items-center justify-center text-center overflow-hidden">
         <div className="absolute inset-0">
           <video
-            className="w-full h-full object-cover object-[center_35%] scale-[1.12]"
+            className="w-full h-full object-cover object-[center_32%] scale-[1.12]"
             autoPlay
             loop
             muted
