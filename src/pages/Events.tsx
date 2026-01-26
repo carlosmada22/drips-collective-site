@@ -67,7 +67,11 @@ const Events: React.FC = () => {
     <div className="bg-black text-white">
       <section className="relative w-full min-h-[60vh] flex items-center justify-center text-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src={eventsHero} alt="Events hero" className="w-full h-full object-cover" />
+          <img
+            src={eventsHero}
+            alt="Events hero"
+            className="w-full h-full object-cover scale-[1.45] blur-[4px]"
+          />
         </div>
 
         <div className="relative z-10 container mx-auto px-6 md:px-12">

@@ -14,12 +14,12 @@ const ResidentsSection: React.FC = () => {
 
       {/* Residents Grid */}
       <div className="container mx-auto px-6 md:px-12">
-        <Reveal as="div" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-          {RESIDENTS.slice(0, 4).map((resident) => (
+        <Reveal as="div" className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-16">
+          {RESIDENTS.map((resident) => (
             <div key={resident.id} className="group flex flex-col items-center">
-              <div className="w-full aspect-[3/4] overflow-hidden bg-gray-900 mb-6 relative">
+              <div className="w-full max-w-[480px] aspect-[3/4] overflow-hidden bg-gray-900 mb-6 relative">
                  <img 
-                  src={resident.imageUrl} 
+                  src={resident.images[0]} 
                   alt={resident.name} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale contrast-125"
                 />

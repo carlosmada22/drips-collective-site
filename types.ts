@@ -27,6 +27,28 @@ export interface Event {
 export interface Resident {
   id: string;
   name: string;
-  imageUrl: string;
   slug: string;
+  bio: string;
+  images: string[];
+  links: {
+    music: {
+      soundcloudUrl: string;
+      youtubeUrl: string;
+      spotifyUrl: string;
+    };
+    contact: {
+      instagramUrl: string;
+      facebookUrl: string;
+      email: string;
+    };
+  };
+  youtubeEmbedUrl: string;
+}
+
+export interface MerchProduct {
+  id: 'hoodie' | 'tshirt';
+  name: string;
+  description: string;
+  images: string[];
+  tpopUrl: string;
 }

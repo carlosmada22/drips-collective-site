@@ -31,7 +31,7 @@ const About: React.FC = () => {
           <div className="mx-auto mt-4 h-px w-24 bg-white/70"></div>
         </Reveal>
 
-        <div className="mt-10 mx-auto max-w-4xl text-left space-y-6 text-base md:text-lg leading-relaxed text-white/90 font-body text-justify tracking-wide">
+        <div className="mt-10 mx-auto max-w-4xl text-left space-y-6 text-xl md:text-2xl leading-relaxed text-white/90 font-body text-justify tracking-wide">
           <Reveal as="p" delay={0}>
             Born in Berlin, DRIPS is a meeting point of disciplines. We create audiovisual works,
             events, and urban interventions that explore the sensory and the conceptualâ€”through a

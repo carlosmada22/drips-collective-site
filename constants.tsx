@@ -1,5 +1,18 @@
-import { NavLink, SocialLink, Event, Resident } from './types';
+import { NavLink, SocialLink, Event, Resident, MerchProduct } from './types';
 import { Instagram, Youtube, CloudLightning, Globe } from 'lucide-react';
+import hoodie1 from './src/assets/merch/hoodie/1.png';
+import hoodie2 from './src/assets/merch/hoodie/2.png';
+import hoodie3 from './src/assets/merch/hoodie/3.jpg';
+import hoodie4 from './src/assets/merch/hoodie/4.png';
+import hoodie5 from './src/assets/merch/hoodie/5.png';
+import hoodie6 from './src/assets/merch/hoodie/6.png';
+import hoodie7 from './src/assets/merch/hoodie/7.png';
+import tshirt1 from './src/assets/merch/tshirt/1.png';
+import tshirt2 from './src/assets/merch/tshirt/2.png';
+import tshirt3 from './src/assets/merch/tshirt/3.png';
+import tshirt4 from './src/assets/merch/tshirt/4.png';
+import maurerPhoto from './src/assets/residents/maurer.jpg';
+import voicexPhoto from './src/assets/residents/voicex.JPG';
 
 export const NAV_LINKS: NavLink[] = [
   { label: 'EVENTS', to: '/events' },
@@ -88,17 +101,72 @@ export const EVENTS: Event[] = [
 ];
 
 export const RESIDENTS: Resident[] = [
-  { id: '1', name: 'KORMAN', imageUrl: 'https://picsum.photos/400/600?grayscale&random=3', slug: 'korman' },
-  { id: '2', name: 'VEX', imageUrl: 'https://picsum.photos/400/600?grayscale&random=4', slug: 'vex' },
-  { id: '3', name: 'ECHO', imageUrl: 'https://picsum.photos/400/600?grayscale&random=5', slug: 'echo' },
-  { id: '4', name: 'NOVA', imageUrl: 'https://picsum.photos/400/600?grayscale&random=6', slug: 'nova' },
-  // Adding more for marquee effect, though grid only shows 4 usually
-  { id: '5', name: 'SYNTH', imageUrl: 'https://picsum.photos/400/600?grayscale&random=7', slug: 'synth' },
-  { id: '6', name: 'PULSE', imageUrl: 'https://picsum.photos/400/600?grayscale&random=8', slug: 'pulse' },
+  {
+    id: '1',
+    name: 'MAURER',
+    slug: 'maurer',
+    bio: 'Austere grooves and slow-burning tension sculpted for late-room pressure.',
+    images: [maurerPhoto, maurerPhoto],
+    links: {
+      music: {
+        soundcloudUrl: 'https://soundcloud.com/example/maurer',
+        youtubeUrl: 'https://youtube.com/example/maurer',
+        spotifyUrl: 'https://open.spotify.com/artist/example-maurer',
+      },
+      contact: {
+        instagramUrl: 'https://instagram.com/example-maurer',
+        facebookUrl: 'https://facebook.com/example-maurer',
+        email: 'maurer@drips-collective.com',
+      },
+    },
+    youtubeEmbedUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  },
+  {
+    id: '2',
+    name: 'VOICEX',
+    slug: 'voicex',
+    bio: 'Raw techno lines with metallic edges and a controlled sense of chaos.',
+    images: [voicexPhoto, voicexPhoto],
+    links: {
+      music: {
+        soundcloudUrl: 'https://soundcloud.com/example/voicex',
+        youtubeUrl: 'https://youtube.com/example/voicex',
+        spotifyUrl: 'https://open.spotify.com/artist/example-voicex',
+      },
+      contact: {
+        instagramUrl: 'https://instagram.com/example-voicex',
+        facebookUrl: 'https://facebook.com/example-voicex',
+        email: 'voicex@drips-collective.com',
+      },
+    },
+    youtubeEmbedUrl: 'https://www.youtube.com/embed/FTQbiNvZqaY',
+  },
+];
+
+/*
+  Developer note:
+  - tpopUrl can be replaced by POD product pages.
+  - Later we can integrate a POD API (create order, shipping rates, webhooks).
+*/
+export const MERCH_PRODUCTS: MerchProduct[] = [
+  {
+    id: 'hoodie',
+    name: 'DRIPS Hoodie',
+    description: 'Heavyweight fleece with a clean front mark and relaxed street fit.',
+    images: [hoodie1, hoodie2, hoodie3, hoodie4, hoodie5, hoodie6, hoodie7],
+    tpopUrl: 'https://example.com/hoodie',
+  },
+  {
+    id: 'tshirt',
+    name: 'DRIPS T-Shirt',
+    description: 'Soft-touch cotton tee with tonal graphics and a clean neckline.',
+    images: [tshirt1, tshirt2, tshirt3, tshirt4],
+    tpopUrl: 'https://example.com/tshirt',
+  },
 ];
 
 export const RESIDENT_MARQUEE_NAMES = [
-  'KORMAN', 'VEX', 'ECHO', 'NOVA', 'SYNTH', 'PULSE', 'VOID', 'NEXUS', 'FLUX', 'KORMAN', 'VEX', 'ECHO'
+  'MAURER', 'VOICEX', 'MAURER', 'VOICEX'
 ];
 
 // Placeholder video URL (abstract dark ink/smoke)
