@@ -24,7 +24,7 @@ export type MerchProductConfig = {
   priceCents: number;
   colors: MerchColorOption[];
   sizes: string[];
-  variantMap: Record<string, string | null>;
+  variantMap: Record<string, number | null>;
 };
 
 export type MerchCatalog = {
@@ -40,19 +40,19 @@ export const MERCH_CATALOG: MerchCatalog = {
       name: 'DRIPS HOODIE (OVERSIZE)',
       description: 'Heavyweight fleece with a clean front mark and relaxed street fit.',
       images: [hoodie1, hoodie2, hoodie3, hoodie4, hoodie5, hoodie6, hoodie7],
-      priceCents: 8500,
+      priceCents: 5000,
       colors: [
         { key: 'black', label: 'Black', swatch: '#0b0b0b' },
       ],
-      sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+      sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
       // Replace with real Printful variant_ids from your Printful store setup.
       variantMap: {
-        'black|S': '6977d16c5da2d3',
-        'black|M': '6977d16c5da373',
-        'black|L': '6977d16c5da408',
-        'black|XL': '6977d16c5da488',
-        'black|XXL': '6977d16c5da512',
-        'black|XXXL': '6977d16c5da593',
+        'black|S': 10779,
+        'black|M': 10780,
+        'black|L': 10781,
+        'black|XL': 10782,
+        'black|2XL': 10783,
+        'black|3XL': 13416,
       },
     },
     {
@@ -60,18 +60,18 @@ export const MERCH_CATALOG: MerchCatalog = {
       name: 'DRIPS T-SHIRT (OVERSIZE)',
       description: 'Soft-touch cotton tee with tonal graphics and a clean neckline.',
       images: [tshirt1, tshirt2, tshirt3, tshirt4],
-      priceCents: 4500,
+      priceCents: 3500,
       colors: [
         { key: 'black', label: 'Black', swatch: '#0b0b0b' },
       ],
-      sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+      sizes: ['S', 'M', 'L', 'XL', '2XL'],
       // Replace with real Printful variant_ids from your Printful store setup.
       variantMap: {
-        'black|S': '69778588593ab1',
-        'black|M': '69778588593b21',
-        'black|L': '69778588593b83',
-        'black|XL': '69778588593bd9',
-        'black|XXL': '69778588593c22',
+        'black|S': 21000,
+        'black|M': 21006,
+        'black|L': 21012,
+        'black|XL': 21018,
+        'black|2XL': 21024,
       },
     },
   ],

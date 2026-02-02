@@ -1,52 +1,84 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
 import { EVENTS } from '../../constants';
 import { Event } from '../../types';
 import eventsHero from '../assets/bg/7h.png';
 import Reveal from '../../components/Reveal';
+import EventModal from '../../components/events/EventModal';
 
 const getEventTime = (event: Event) => {
-  const time = Date.parse(event.dateStart);
+  const time = Date.parse(event.startDateISO);
   return Number.isNaN(time) ? 0 : time;
 };
 
-const formatDateRange = (event: Event) =>
-  event.dateEnd ? `${event.dateStart} - ${event.dateEnd}` : event.dateStart;
+const formatEventDate = (event: Event) => {
+  const date = new Date(event.startDateISO);
+  if (Number.isNaN(date.getTime())) {
+    return event.startDateISO;
+  }
+  return new Intl.DateTimeFormat('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(date);
+};
 
-const EventCard: React.FC<{ event: Event }> = ({ event }) => {
-  const eventLink = event.slug ? `/events/${event.slug}` : '/events';
+const EventCard: React.FC<{ event: Event; onOpen: (event: Event, trigger: HTMLElement) => void }> = ({
+  event,
+  onOpen,
+}) => {
+  const dateLabel = formatEventDate(event);
+
+  const handleKeyDown = (keyboardEvent: React.KeyboardEvent<HTMLDivElement>) => {
+    if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
+      keyboardEvent.preventDefault();
+      onOpen(event, keyboardEvent.currentTarget);
+    }
+  };
 
   return (
-    <article className="py-8">
+    <article id={`event-${event.slug}`} className="py-8">
       <div className="mx-auto w-full max-w-3xl">
-        <div className="relative h-56 md:h-64 overflow-hidden bg-gray-900 shadow-2xl">
-          <img
-            src={event.coverImageUrl}
-            alt={event.title}
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        <div className="mt-6 flex flex-col md:flex-row md:items-start md:justify-between gap-5 text-center md:text-left">
-          <div className="flex-1">
-            <h3 className="text-2xl md:text-3xl font-heading uppercase tracking-widest text-white">
-              {event.title}
-            </h3>
-            <p className="mt-2 text-sm text-gray-300 font-mono tracking-wide">{formatDateRange(event)}</p>
-            {event.location && (
-              <p className="mt-2 text-xs text-gray-500 font-mono tracking-[0.3em] uppercase">
-                {event.location}
-              </p>
-            )}
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={(clickEvent) => onOpen(event, clickEvent.currentTarget)}
+          onKeyDown={handleKeyDown}
+          className="group"
+        >
+          <div className="relative mx-auto aspect-[2/3] w-full max-w-xs overflow-hidden bg-gray-900 shadow-2xl">
+            <img
+              src={event.posterSrc}
+              alt={event.displayTitle}
+              className="w-full h-full object-cover"
+            />
           </div>
 
-          <div className="md:pt-1 shrink-0 flex justify-center md:justify-end">
-            <Link
-              to={eventLink}
-              className="inline-flex items-center justify-center px-10 py-4 min-w-[180px] bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white transition-colors duration-300 uppercase tracking-widest text-sm font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
-            >
-              VIEW EVENT
-            </Link>
+          <div className="mt-6 flex flex-col md:flex-row md:items-start md:justify-between gap-5 text-center md:text-left">
+            <div className="flex-1">
+              <h3 className="text-2xl md:text-3xl font-heading uppercase tracking-widest text-white">
+                {event.displayTitle}
+              </h3>
+              <p className="mt-2 text-sm text-gray-300 font-mono tracking-wide">
+                {dateLabel} / {event.timeRange}
+              </p>
+              <p className="mt-2 text-xs text-gray-500 font-mono tracking-[0.3em] uppercase">
+                {event.venue}
+              </p>
+            </div>
+
+            <div className="md:pt-1 shrink-0 flex justify-center md:justify-end">
+              <a
+                href={event.raUrl}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(clickEvent) => clickEvent.stopPropagation()}
+                onKeyDown={(keyboardEvent) => keyboardEvent.stopPropagation()}
+                className="inline-flex items-center justify-center px-10 py-4 min-w-[180px] bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white transition-colors duration-300 uppercase tracking-widest text-sm font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+              >
+                VIEW EVENT
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -55,6 +87,8 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
 };
 
 const Events: React.FC = () => {
+  const [activeEvent, setActiveEvent] = useState<Event | null>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
   const now = Date.now();
   const upcomingEvents = EVENTS.filter((event) => getEventTime(event) >= now).sort(
     (a, b) => getEventTime(a) - getEventTime(b)
@@ -62,6 +96,18 @@ const Events: React.FC = () => {
   const pastEvents = EVENTS.filter((event) => getEventTime(event) < now).sort(
     (a, b) => getEventTime(b) - getEventTime(a)
   );
+
+  const handleOpenModal = (event: Event, trigger: HTMLElement) => {
+    triggerRef.current = trigger;
+    setActiveEvent(event);
+  };
+
+  const handleCloseModal = () => {
+    setActiveEvent(null);
+    requestAnimationFrame(() => {
+      triggerRef.current?.focus();
+    });
+  };
 
   return (
     <div className="bg-black text-white">
@@ -92,13 +138,13 @@ const Events: React.FC = () => {
 
           {upcomingEvents.length === 0 ? (
             <p className="mt-8 text-sm text-gray-500 font-mono tracking-wide">
-              No upcoming events yet.
+              Coming soon.
             </p>
           ) : (
             <div className="mt-4 divide-y divide-white/10">
               {upcomingEvents.map((event, index) => (
                 <Reveal key={event.id} as="div" delay={Math.min(index * 60, 360)}>
-                  <EventCard event={event} />
+                  <EventCard event={event} onOpen={handleOpenModal} />
                 </Reveal>
               ))}
             </div>
@@ -112,15 +158,17 @@ const Events: React.FC = () => {
             <h2 className="text-xl font-heading tracking-[0.35em] uppercase text-gray-200">PAST</h2>
           </Reveal>
 
-          <div className="mt-4 divide-y divide-white/10">
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12">
             {pastEvents.map((event, index) => (
               <Reveal key={event.id} as="div" delay={Math.min(index * 60, 360)}>
-                <EventCard event={event} />
+                <EventCard event={event} onOpen={handleOpenModal} />
               </Reveal>
             ))}
           </div>
         </div>
       </section>
+
+      <EventModal event={activeEvent} isOpen={activeEvent !== null} onClose={handleCloseModal} />
     </div>
   );
 };

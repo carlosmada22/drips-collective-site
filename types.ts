@@ -13,15 +13,18 @@ export interface SocialLink {
 
 export interface Event {
   id: string;
-  title: string;
-  dateStart: string; // ISO date string or formatted
-  dateEnd: string;
-  monthLabel: string;
-  dayNumber: string;
-  coverImageUrl: string;
+  displayTitle: string;
+  fullTitle: string;
   slug: string;
-  location?: string;
-  ticketUrl?: string;
+  posterSrc: string;
+  startDateISO: string;
+  endDateISO?: string;
+  timeRange: string;
+  venue: string;
+  address?: string;
+  promoters: string[];
+  description: string;
+  raUrl: string;
 }
 
 export interface Resident {

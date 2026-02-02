@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+type MarqueeItem = string | { label: string; to?: string };
+
 interface MarqueeProps {
-  items: string[];
+  items: MarqueeItem[];
   separator?: string;
   includeTrailingSeparator?: boolean;
   linkTo?: string;
@@ -36,17 +38,19 @@ const Marquee: React.FC<MarqueeProps> = ({
 
   const renderItems = (suffix: string) =>
     items.map((item, index) => {
+      const label = typeof item === 'string' ? item : item.label;
+      const itemLink = typeof item === 'string' ? linkTo : item.to ?? linkTo;
       const content = (
         <span className={combinedItemClassName} style={{ WebkitTextStroke: '1px white' }}>
-          {item}
+          {label}
         </span>
       );
       const showSeparator = includeTrailingSeparator || index < items.length - 1;
 
       return (
-        <span key={`${item}-${index}${suffix}`} className="inline-flex items-center">
-          {linkTo ? (
-            <Link to={linkTo} className="inline-flex items-center">
+        <span key={`${label}-${index}${suffix}`} className="inline-flex items-center">
+          {itemLink ? (
+            <Link to={itemLink} className="inline-flex items-center">
               {content}
             </Link>
           ) : (

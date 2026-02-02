@@ -6,37 +6,74 @@ import Marquee from './Marquee';
 import Reveal from './Reveal';
 
 const getEventTime = (event: Event) => {
-  const time = Date.parse(event.dateStart);
+  const time = Date.parse(event.startDateISO);
   return Number.isNaN(time) ? 0 : time;
 };
 
+const formatEventDate = (event: Event) => {
+  const date = new Date(event.startDateISO);
+  if (Number.isNaN(date.getTime())) {
+    return event.startDateISO;
+  }
+  return new Intl.DateTimeFormat('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(date);
+};
+
+const formatEventMonth = (event: Event) => {
+  const date = new Date(event.startDateISO);
+  if (Number.isNaN(date.getTime())) {
+    return '';
+  }
+  return new Intl.DateTimeFormat('en-GB', { month: 'short' }).format(date).toUpperCase();
+};
+
+const formatEventDay = (event: Event) => {
+  const date = new Date(event.startDateISO);
+  if (Number.isNaN(date.getTime())) {
+    return '';
+  }
+  return new Intl.DateTimeFormat('en-GB', { day: '2-digit' }).format(date);
+};
+
 const EventCard: React.FC<{ event: Event }> = ({ event }) => {
-  const dateRange = event.dateEnd ? `${event.dateStart} - ${event.dateEnd}` : event.dateStart;
+  const dateLabel = formatEventDate(event);
+  const monthLabel = formatEventMonth(event);
+  const dayNumber = formatEventDay(event);
+  const eventHash = `event-${event.slug}`;
 
   return (
     <Link
-      to={`/events/${event.slug}`}
+      to={`/events#${eventHash}`}
       className="group block w-full max-w-lg mx-auto transform transition-all duration-500 hover:scale-[1.02]"
     >
-      <div className="relative aspect-[3/2] overflow-hidden bg-gray-900 shadow-2xl">
-        <img
-          src={event.coverImageUrl}
-          alt={event.title}
-          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0"
-        />
+      <div className="mx-auto w-full max-w-xs">
+        <div className="relative mx-auto aspect-[2/3] w-full overflow-hidden bg-gray-900 shadow-2xl">
+          <img
+            src={event.posterSrc}
+            alt={event.displayTitle}
+            className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+          />
 
-        {/* Date Badge */}
-        <div className="absolute top-0 right-0 bg-white text-black p-4 flex flex-col items-center justify-center min-w-[80px]">
-          <span className="text-sm font-bold tracking-widest uppercase">{event.monthLabel}</span>
-          <span className="text-3xl font-heading font-bold leading-none mt-1">{event.dayNumber}</span>
+          {/* Date Badge */}
+          <div className="absolute top-0 right-0 bg-white text-black p-4 flex flex-col items-center justify-center min-w-[80px]">
+            <span className="text-sm font-bold tracking-widest uppercase">{monthLabel}</span>
+            <span className="text-3xl font-heading font-bold leading-none mt-1">{dayNumber}</span>
+          </div>
         </div>
-      </div>
 
-      <div className="mt-6 text-left">
-        <h3 className="text-2xl md:text-3xl font-heading uppercase tracking-widest text-white group-hover:text-gray-200 transition-colors">
-          DRIPS | {event.title}
-        </h3>
-        <p className="mt-2 text-sm text-gray-400 font-mono tracking-wide">{dateRange}</p>
+        <div className="mt-6 text-center">
+          <h3 className="text-2xl md:text-3xl font-heading uppercase tracking-widest text-white group-hover:text-gray-200 transition-colors">
+            {event.displayTitle}
+          </h3>
+          <p className="mt-2 text-sm text-gray-400 font-mono tracking-wide">{dateLabel}</p>
+          <p className="mt-2 text-xs text-gray-500 font-mono tracking-[0.3em] uppercase">
+            {event.venue}
+          </p>
+        </div>
       </div>
     </Link>
   );
@@ -44,10 +81,13 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
 
 const EventsSection: React.FC = () => {
   const now = Date.now();
-  const upcomingEvents = EVENTS.filter((event) => getEventTime(event) >= now).sort(
-    (a, b) => getEventTime(a) - getEventTime(b)
-  );
-  const eventTitles = upcomingEvents.map((event) => event.title);
+  const eventsByDateAsc = [...EVENTS].sort((a, b) => getEventTime(a) - getEventTime(b));
+  const pastEvents = eventsByDateAsc.filter((event) => getEventTime(event) < now);
+  const featuredEvents = [...pastEvents].sort((a, b) => getEventTime(b) - getEventTime(a)).slice(0, 2);
+  const eventTitles = eventsByDateAsc.map((event) => ({
+    label: event.displayTitle,
+    to: `/events#event-${event.slug}`,
+  }));
 
   return (
     <section id="events" className="relative w-full min-h-[75vh] py-24 flex items-center bg-black">
@@ -74,7 +114,7 @@ const EventsSection: React.FC = () => {
 
         <div className="container mx-auto px-6 md:px-12">
           <Reveal as="div" className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-start">
-            {upcomingEvents.map((event) => (
+            {featuredEvents.map((event) => (
               <EventCard key={event.id} event={event} />
             ))}
           </Reveal>

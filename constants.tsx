@@ -14,6 +14,10 @@ import tshirt4 from './src/assets/merch/tshirt/4.png';
 import maurerPhoto1 from './src/assets/residents/maurer.jpg';
 import voicexPhoto1 from './src/assets/residents/voicex.JPG';
 import voicexPhoto2 from './src/assets/residents/voicex2.jpg';
+import dripsPosterI from './src/assets/events/dripsI.jpg';
+import dripsPosterChroma from './src/assets/events/dripsXchroma.jpg';
+import dripsPosterLapsus from './src/assets/events/dripsXlapsus.jpg';
+import dripsPosterVibrant from './src/assets/events/dripsXvibrant.jpg';
 
 export const NAV_LINKS: NavLink[] = [
   { label: 'EVENTS', to: '/events' },
@@ -48,60 +52,104 @@ export const SOCIAL_LINKS: SocialLink[] = [
 export const EVENTS: Event[] = [
   {
     id: '1',
-    title: 'WAREHOUSE SERIES: 004',
-    dateStart: 'Feb 6, 2026',
-    dateEnd: 'Feb 7, 2026',
-    monthLabel: 'FEB',
-    dayNumber: '06',
-    coverImageUrl: 'https://picsum.photos/800/600?grayscale&random=1',
-    slug: 'warehouse-series-004',
-    location: 'BUNKER HALL, BERLIN',
-    ticketUrl: 'https://example.com/tickets/warehouse-series-004'
+    displayTitle: 'DRIPS I',
+    fullTitle: 'DRIPS I',
+    slug: 'drips-i',
+    posterSrc: dripsPosterI,
+    startDateISO: '2025-03-01T23:00:00+01:00',
+    timeRange: '23:00 - 11:00',
+    venue: 'TBA',
+    promoters: ['DRIPS'],
+    description:
+      'Experience the raw energy of techno with us on a night full of immersive, boundary-pushing sounds. Celebrate chaos, introspection, and the fluid beauty of the underground.\n' +
+      'Lose yourself in the sound. Find yourself in the rhythm. Welcome to DRIPS.\n\n' +
+      'In order to buy tickets check the link at our Instagram page: @drips.collective',
+    raUrl: 'https://es.ra.co/events/2094935',
   },
   {
     id: '2',
-    title: 'ALL NIGHT LONG: KORMAN',
-    dateStart: 'Feb 14, 2026',
-    dateEnd: 'Feb 15, 2026',
-    monthLabel: 'FEB',
-    dayNumber: '14',
-    coverImageUrl: 'https://picsum.photos/800/600?grayscale&random=2',
-    slug: 'korman-all-night',
-    location: 'DRIPS MAIN ROOM, BERLIN'
+    displayTitle: 'DRIPS x LAPSUS',
+    fullTitle: 'LAPSUS x DRIPS w/ BIXBITA, Atonism, Schicktanz, EMIRA, AND MORE',
+    slug: 'lapsus-x-drips',
+    posterSrc: dripsPosterLapsus,
+    startDateISO: '2025-05-31T23:00:00+02:00',
+    timeRange: '23:00 - 10:00',
+    venue: 'ÆDEN',
+    address: 'Schleusenufer 2, 10997 Berlin',
+    promoters: ['Lapsus Events', 'DRIPS'],
+    description:
+      '31st May, AEDEN. Our biggest event to date.\n' +
+      'LAPSUS x DRIPS is here to make you groove like never before with a curated lineup, a dreamlike space, and the exact vibe you’ve been craving to kick off the Berlin summer.\n\n' +
+      'Lineup:\n' +
+      'ATONISM\n' +
+      'BIXBITA\n' +
+      'DAVE.IT aka BUENRI\n' +
+      'EMIRA\n' +
+      'MAURER\n' +
+      'ORBITAL DEPTHS\n' +
+      'POVE\n' +
+      'RAGE AMORETTY\n' +
+      'SANTOS\n' +
+      'SCHICKTANZ\n' +
+      'VIVACE\n' +
+      'VOICEX\n' +
+      'YONTO\n' +
+      'ZELYNA JE BELLE\n\n' +
+      'See you on the dancefloor.',
+    raUrl: 'https://es.ra.co/events/2122767',
   },
   {
     id: '3',
-    title: 'DRIPS x SUBLEVEL TAKEOVER',
-    dateStart: 'Mar 20, 2026',
-    dateEnd: 'Mar 21, 2026',
-    monthLabel: 'MAR',
-    dayNumber: '20',
-    coverImageUrl: 'https://picsum.photos/800/600?grayscale&random=9',
-    slug: 'sublevel-takeover',
-    location: 'SUBLEVEL 02, BERLIN',
-    ticketUrl: 'https://example.com/tickets/sublevel-takeover'
+    displayTitle: 'DRIPS x CHROMA XXL',
+    fullTitle: 'Chroma XXL x DRIPS [2 STAGES INDOOR + GARDEN CHILL OUT]',
+    slug: 'chroma-xxl-x-drips',
+    posterSrc: dripsPosterChroma,
+    startDateISO: '2025-09-11T22:00:00+02:00',
+    timeRange: '22:00 - 08:00',
+    venue: 'OXI',
+    address: 'Wiesenweg 1-4, 10365 Berlin',
+    promoters: ['OXI Events', 'Chroma Berlin', 'DRIPS'],
+    description:
+      'CHROMA XXL x DRIPS - 11.09.2025\n\n' +
+      'After teaming up a few times with artists from the DRIPS collective, CHROMA is closing out this amazing summer season at @oxi_club by uniting both collectives for one unforgettable night.\n\n' +
+      'DRIPS will be rocking the O Floor stage, while CHROMA brings you a mix of international and local talents on the X Floor. A night that brings us close, sweating & moving as one, all for the love of sexy grooves.\n\n' +
+      'Can’t wait to rock this with you, fam.\n\n' +
+      'LINE UP\n' +
+      '@brtinzz.music\n' +
+      '@a.cheka_\n' +
+      '@dj_fugitive_\n' +
+      '@franeva_\n' +
+      '@glia.dj\n' +
+      '@jkm.wav\n' +
+      '@maurer_\n' +
+      '@mislaw_music\n' +
+      '@voicexmusic\n\n' +
+      '*\n' +
+      'This event is QUEER friendly. Anyone who does not respect the values of the event will be welcome to leave the club. No racism. No transphobia. No sexism. No homophobia. No discrimination of any type.\n\n' +
+      '**Tickets on RA and at the door!\n\n' +
+      'CHROMA evolves to a higher state of mind.',
+    raUrl: 'https://es.ra.co/events/2049017',
   },
   {
     id: '4',
-    title: 'OPEN AIR: TEMPLE RUINS',
-    dateStart: 'Aug 9, 2025',
-    dateEnd: 'Aug 10, 2025',
-    monthLabel: 'AUG',
-    dayNumber: '09',
-    coverImageUrl: 'https://picsum.photos/800/600?grayscale&random=10',
-    slug: 'temple-ruins-open-air',
-    location: 'TEMPLE RUINS, BERLIN'
-  },
-  {
-    id: '5',
-    title: 'WAREHOUSE SERIES: 003',
-    dateStart: 'Nov 22, 2024',
-    dateEnd: 'Nov 23, 2024',
-    monthLabel: 'NOV',
-    dayNumber: '22',
-    coverImageUrl: 'https://picsum.photos/800/600?grayscale&random=11',
-    slug: 'warehouse-series-003',
-    location: 'BUNKER HALL, BERLIN'
+    displayTitle: 'DRIPS x VIBRANT',
+    fullTitle: 'DRIPS X VIBRANT',
+    slug: 'drips-x-vibrant',
+    posterSrc: dripsPosterVibrant,
+    startDateISO: '2025-12-06T23:00:00+01:00',
+    timeRange: '23:00 - 08:00',
+    venue: 'Lokschuppen Berlin',
+    address: 'Warschauer Brücke, Revaler Straße 99 Zugang über, 10245 Berlin, Germany',
+    promoters: ['DRIPS'],
+    description:
+      'From Amsterdam to Berlin, two cities of pulse and power finally meet. Frequencies intertwine, energy converges: this is where the current flows one last time before the year fades.\n' +
+      'A cross-current of sound, sweat, and motion, where walls breathe and floors shift beneath the weight of rhythm.\n' +
+      'Two areas, two energies, one living organism of light and bass.\n\n' +
+      'With artists like SLV, Filtrack, or L’Attitude, the night unfolds layer by layer. Expect moments that stretch beyond the clock, until time bends and the floor dissolves into pure movement.\n\n' +
+      '23h till late.\n' +
+      'Come for the closure.\n' +
+      'Stay for the release.',
+    raUrl: 'https://es.ra.co/events/2303579',
   }
 ];
 
