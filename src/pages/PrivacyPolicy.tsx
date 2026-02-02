@@ -19,7 +19,7 @@ const PrivacyPolicy: React.FC = () => {
           <div className="mt-4 h-px w-20 bg-white/70"></div>
         </div>
 
-        <div className="mt-10 max-w-3xl space-y-10 text-base md:text-lg leading-relaxed text-white/90 font-body">
+        <div className="mt-10 max-w-3xl space-y-10 text-base md:text-lg leading-relaxed text-white/90 font-body tracking-normal normal-case">
           <section className="space-y-3">
             <h2 className="text-sm font-heading uppercase tracking-[0.35em] text-white">Introduction</h2>
             <p>

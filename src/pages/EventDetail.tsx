@@ -14,7 +14,7 @@ const EventDetail: React.FC = () => {
       />
       <section className="pb-24 bg-black text-white">
         <div className="container mx-auto px-6 md:px-12">
-          <p className="text-gray-300 max-w-2xl font-body">
+          <p className="text-gray-300 max-w-2xl font-body leading-relaxed tracking-normal normal-case">
             We are finalizing the schedule and artist announcements for this event.
           </p>
         </div>

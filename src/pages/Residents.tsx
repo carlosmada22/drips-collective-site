@@ -26,7 +26,10 @@ const Accordion: React.FC<{ title: string; children: React.ReactNode }> = ({ tit
         />
       </button>
       {isOpen && (
-        <div id={contentId} className="pb-4 text-sm text-gray-300 font-body space-y-2">
+        <div
+          id={contentId}
+          className="pb-4 text-sm text-gray-300 font-body space-y-2 leading-relaxed tracking-normal normal-case"
+        >
           {children}
         </div>
       )}

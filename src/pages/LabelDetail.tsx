@@ -36,7 +36,7 @@ const LabelDetail: React.FC = () => {
       )}
       <section className="pb-24 bg-black text-white">
         <div className="container mx-auto px-6 md:px-12">
-          <p className="text-gray-300 max-w-2xl font-body">
+          <p className="text-gray-300 max-w-2xl font-body leading-relaxed tracking-normal normal-case">
             This release page will include streaming links, visuals, and press notes.
           </p>
         </div>

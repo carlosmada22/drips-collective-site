@@ -10,7 +10,9 @@ const CartPanel: React.FC = () => {
     return (
       <div className="border border-white/10 p-6 bg-black/60">
         <p className="text-xs tracking-[0.35em] uppercase text-gray-400 font-body">Cart</p>
-        <p className="mt-4 text-sm text-gray-300 font-body">Your cart is empty.</p>
+        <p className="mt-4 text-sm text-gray-300 font-body leading-relaxed tracking-normal normal-case">
+          Your cart is empty.
+        </p>
       </div>
     );
   }

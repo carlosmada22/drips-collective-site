@@ -112,7 +112,9 @@ const Checkout: React.FC = () => {
         <PageHero title="CHECKOUT" description="Your cart is currently empty." />
         <section className="pb-24 bg-black text-white">
           <div className="container mx-auto px-6 md:px-12">
-            <p className="text-gray-300 font-body">Add merch before checking out.</p>
+            <p className="text-gray-300 font-body leading-relaxed tracking-normal normal-case">
+              Add merch before checking out.
+            </p>
           </div>
         </section>
       </>

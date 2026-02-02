@@ -1,6 +1,7 @@
-﻿import React from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import aboutBg from '../assets/bg/1v.png';
 import Reveal from '../../components/Reveal';
+import useScrollLock from '../../hooks/useScrollLock';
 
 const About: React.FC = () => {
   const galleryHeights = [
@@ -24,6 +25,50 @@ const About: React.FC = () => {
       alt: `Gallery image ${index + 1}`,
       height: galleryHeights[index % galleryHeights.length],
     }));
+
+
+
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useScrollLock(isLightboxOpen);
+
+  useEffect(() => {
+    if (!isLightboxOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setIsLightboxOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isLightboxOpen]);
+
+  const handleOpenLightbox = (index: number) => {
+    setCurrentIndex(index);
+    setIsLightboxOpen(true);
+  };
+
+  const handleCloseLightbox = () => {
+    setIsLightboxOpen(false);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % galleryImages.length);
+  };
+
+  const activeImage = galleryImages[currentIndex];
 
   return (
     <section className="relative text-white overflow-hidden">
@@ -72,11 +117,10 @@ const About: React.FC = () => {
           {galleryImages.map((image, index) => (
             <Reveal
               key={image.alt}
-              as="a"
-              href={image.src}
-              target="_blank"
-              rel="noreferrer"
-              className="mb-6 block break-inside-avoid"
+              as="button"
+              type="button"
+              onClick={() => handleOpenLightbox(index)}
+              className="mb-6 block break-inside-avoid text-left"
               delay={Math.min(index * 60, 360)}
             >
               <img
@@ -87,7 +131,85 @@ const About: React.FC = () => {
             </Reveal>
           ))}
         </div>
+
       </div>
+
+      {isLightboxOpen && activeImage && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Photo gallery"
+          onClick={handleCloseLightbox}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-6 py-10"
+        >
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              handleCloseLightbox();
+            }}
+            className="absolute right-6 top-6 text-xs uppercase tracking-[0.3em] text-white/80 hover:text-white transition-opacity"
+            aria-label="Close gallery"
+          >
+            X
+          </button>
+
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              handlePrev();
+            }}
+            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-opacity"
+            aria-label="Previous image"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="h-9 w-9"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+
+          <div
+            onClick={(event) => event.stopPropagation()}
+            className="relative flex items-center justify-center"
+          >
+            <img
+              src={activeImage.src}
+              alt={activeImage.alt}
+              className="max-h-[85vh] max-w-[90vw] object-contain"
+            />
+          </div>
+
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              handleNext();
+            }}
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-opacity"
+            aria-label="Next image"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="h-9 w-9"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 6l6 6-6 6" />
+            </svg>
+          </button>
+        </div>
+      )}
     </section>
   );
 };
