@@ -139,12 +139,11 @@ export const RESIDENTS: Resident[] = [
     links: {
       music: {
         soundcloudUrl: 'https://soundcloud.com/maurersc',
-        youtubeUrl: 'https://youtube.com/example/maurer',
         spotifyUrl: 'https://open.spotify.com/artist/2Mz4xppLRLkIsvMFb9STKO',
+        raUrl: 'https://ra.co/dj/maurer',
       },
       contact: {
         instagramUrl: 'https://www.instagram.com/maurer_',
-        facebookUrl: 'https://facebook.com/example-maurer',
         email: 'maurer@drips-collective.com',
       },
     },
@@ -159,12 +158,11 @@ export const RESIDENTS: Resident[] = [
     links: {
       music: {
         soundcloudUrl: 'https://soundcloud.com/voicex',
-        youtubeUrl: 'https://youtube.com/example/voicex',
         spotifyUrl: 'https://open.spotify.com/artist/1Ox2d4YKQFfuxBIUEQc65o',
+        raUrl: 'https://ra.co/dj/voicex',
       },
       contact: {
         instagramUrl: 'https://www.instagram.com/voicexmusic',
-        facebookUrl: 'https://facebook.com/example-voicex',
         email: 'voicex@drips-collective.com',
       },
     },

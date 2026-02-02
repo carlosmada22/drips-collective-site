@@ -1,21 +1,29 @@
 ﻿import React from 'react';
 import aboutBg from '../assets/bg/1v.png';
-import galleryImage from '../assets/footer-bg.jpg';
 import Reveal from '../../components/Reveal';
 
 const About: React.FC = () => {
-  const galleryImages = [
-    { src: galleryImage, alt: 'Gallery image 1', height: 'h-72 md:h-80' },
-    { src: galleryImage, alt: 'Gallery image 2', height: 'h-64 md:h-72' },
-    { src: galleryImage, alt: 'Gallery image 3', height: 'h-80 md:h-96' },
-    { src: galleryImage, alt: 'Gallery image 4', height: 'h-60 md:h-72' },
-    { src: galleryImage, alt: 'Gallery image 5', height: 'h-72 md:h-80' },
-    { src: galleryImage, alt: 'Gallery image 6', height: 'h-64 md:h-72' },
-    { src: galleryImage, alt: 'Gallery image 7', height: 'h-80 md:h-96' },
-    { src: galleryImage, alt: 'Gallery image 8', height: 'h-60 md:h-72' },
-    { src: galleryImage, alt: 'Gallery image 9', height: 'h-72 md:h-80' },
-    { src: galleryImage, alt: 'Gallery image 10', height: 'h-64 md:h-72' },
+  const galleryHeights = [
+    'h-72 md:h-80',
+    'h-64 md:h-72',
+    'h-80 md:h-96',
+    'h-60 md:h-72',
   ];
+
+  const galleryImages = (
+    Object.entries(
+      import.meta.glob('../assets/gallery/*.{png,jpg,jpeg,webp,JPEG,PNG,JPG}', {
+        eager: true,
+        import: 'default',
+      })
+    ) as Array<[string, string]>
+  )
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([, src], index) => ({
+      src,
+      alt: `Gallery image ${index + 1}`,
+      height: galleryHeights[index % galleryHeights.length],
+    }));
 
   return (
     <section className="relative text-white overflow-hidden">
@@ -31,7 +39,7 @@ const About: React.FC = () => {
           <div className="mx-auto mt-4 h-px w-24 bg-white/70"></div>
         </Reveal>
 
-        <div className="mt-10 mx-auto max-w-4xl text-left space-y-6 text-xl md:text-2xl leading-relaxed text-white/90 font-body text-justify tracking-wide">
+        <div className="mt-10 mx-auto max-w-4xl text-left space-y-6 text-lg sm:text-xl md:text-2xl leading-relaxed text-white/90 font-body text-justify tracking-normal normal-case">
           <Reveal as="p" delay={0}>
             Born in Berlin, DRIPS is a meeting point of disciplines. We create audiovisual works,
             events, and urban interventions that explore the sensory and the conceptualâ€”through a

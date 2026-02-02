@@ -13,7 +13,7 @@ export default {
         'drips-gray': '#1a1a1a',
       },
       fontFamily: {
-        body: ['"Bebas Neue"', 'sans-serif'],
+        body: ['"Space Grotesk"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         'widest-plus': '0.2em',

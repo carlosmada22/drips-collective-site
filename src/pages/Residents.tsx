@@ -64,11 +64,11 @@ const Residents: React.FC = () => {
                   <h2 className="text-2xl md:text-3xl font-heading tracking-[0.4em] uppercase">
                     {resident.name}
                   </h2>
-                  <p className="text-sm md:text-base text-gray-300 font-body leading-relaxed">
+                  <p className="text-sm md:text-base text-gray-300 font-body leading-relaxed tracking-normal normal-case">
                     {resident.bio}
                   </p>
                   <div className="mt-6 text-left">
-                    <Accordion title="MUSIC">
+                    <Accordion title="LINKS">
                       <a
                         href={resident.links.music.soundcloudUrl}
                         target="_blank"
@@ -78,20 +78,20 @@ const Residents: React.FC = () => {
                         SoundCloud
                       </a>
                       <a
-                        href={resident.links.music.youtubeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block text-gray-300 hover:text-white transition-colors duration-300"
-                      >
-                        YouTube
-                      </a>
-                      <a
                         href={resident.links.music.spotifyUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="block text-gray-300 hover:text-white transition-colors duration-300"
                       >
                         Spotify
+                      </a>
+                      <a
+                        href={resident.links.music.raUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block text-gray-300 hover:text-white transition-colors duration-300"
+                      >
+                        Resident Advisor
                       </a>
                     </Accordion>
                     <div className="border-b border-white/10">
@@ -103,14 +103,6 @@ const Residents: React.FC = () => {
                           className="block text-gray-300 hover:text-white transition-colors duration-300"
                         >
                           Instagram
-                        </a>
-                        <a
-                          href={resident.links.contact.facebookUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block text-gray-300 hover:text-white transition-colors duration-300"
-                        >
-                          Facebook
                         </a>
                         <a
                           href={`mailto:${resident.links.contact.email}`}

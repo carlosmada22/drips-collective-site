@@ -37,12 +37,11 @@ export interface Resident {
   links: {
     music: {
       soundcloudUrl: string;
-      youtubeUrl: string;
       spotifyUrl: string;
+      raUrl: string;
     };
     contact: {
       instagramUrl: string;
-      facebookUrl: string;
       email: string;
     };
   };

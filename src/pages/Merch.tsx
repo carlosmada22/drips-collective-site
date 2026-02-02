@@ -29,7 +29,7 @@ const Merch: React.FC = () => {
             >
               MERCH
             </h1>
-            <p className="mt-4 text-sm md:text-base text-gray-300 font-body tracking-wide">
+            <p className="mt-4 text-sm md:text-base text-gray-300 font-body tracking-normal leading-relaxed normal-case">
               Print on demand. Made when you order.
             </p>
           </Reveal>
