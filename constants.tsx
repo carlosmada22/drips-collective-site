@@ -1,5 +1,7 @@
 import { NavLink, SocialLink, Event, Resident, MerchProduct } from './types';
-import { Instagram, Youtube, CloudLightning, Globe } from 'lucide-react';
+import { Instagram } from 'lucide-react';
+import soundcloudIcon from './src/assets/icons/soundcloud.png';
+import raIcon from './src/assets/icons/ra.png';
 import hoodie1 from './src/assets/merch/hoodie/1.png';
 import hoodie2 from './src/assets/merch/hoodie/2.png';
 import hoodie3 from './src/assets/merch/hoodie/3.jpg';
@@ -45,8 +47,8 @@ export const HERO_CTA_LINKS: NavLink[] = [
 
 export const SOCIAL_LINKS: SocialLink[] = [
   { platform: 'Instagram', url: 'https://www.instagram.com/drips.collective/', icon: Instagram },
-  { platform: 'SoundCloud', url: 'https://soundcloud.com/drips-collective', icon: CloudLightning }, // CloudLightning as placeholder for SoundCloud
-  { platform: 'Resident Advisor', url: 'https://ra.co/promoters/157991', icon: Globe }, // Globe as placeholder for RA
+  { platform: 'SoundCloud', url: 'https://soundcloud.com/drips-collective', iconSrc: soundcloudIcon },
+  { platform: 'Resident Advisor', url: 'https://ra.co/promoters/157991', iconSrc: raIcon },
 ];
 
 export const EVENTS: Event[] = [
@@ -80,21 +82,6 @@ export const EVENTS: Event[] = [
     description:
       '31st May, AEDEN. Our biggest event to date.\n' +
       'LAPSUS x DRIPS is here to make you groove like never before with a curated lineup, a dreamlike space, and the exact vibe you’ve been craving to kick off the Berlin summer.\n\n' +
-      'Lineup:\n' +
-      'ATONISM\n' +
-      'BIXBITA\n' +
-      'DAVE.IT aka BUENRI\n' +
-      'EMIRA\n' +
-      'MAURER\n' +
-      'ORBITAL DEPTHS\n' +
-      'POVE\n' +
-      'RAGE AMORETTY\n' +
-      'SANTOS\n' +
-      'SCHICKTANZ\n' +
-      'VIVACE\n' +
-      'VOICEX\n' +
-      'YONTO\n' +
-      'ZELYNA JE BELLE\n\n' +
       'See you on the dancefloor.',
     raUrl: 'https://es.ra.co/events/2122767',
   },
@@ -114,17 +101,6 @@ export const EVENTS: Event[] = [
       'After teaming up a few times with artists from the DRIPS collective, CHROMA is closing out this amazing summer season at @oxi_club by uniting both collectives for one unforgettable night.\n\n' +
       'DRIPS will be rocking the O Floor stage, while CHROMA brings you a mix of international and local talents on the X Floor. A night that brings us close, sweating & moving as one, all for the love of sexy grooves.\n\n' +
       'Can’t wait to rock this with you, fam.\n\n' +
-      'LINE UP\n' +
-      '@brtinzz.music\n' +
-      '@a.cheka_\n' +
-      '@dj_fugitive_\n' +
-      '@franeva_\n' +
-      '@glia.dj\n' +
-      '@jkm.wav\n' +
-      '@maurer_\n' +
-      '@mislaw_music\n' +
-      '@voicexmusic\n\n' +
-      '*\n' +
       'This event is QUEER friendly. Anyone who does not respect the values of the event will be welcome to leave the club. No racism. No transphobia. No sexism. No homophobia. No discrimination of any type.\n\n' +
       '**Tickets on RA and at the door!\n\n' +
       'CHROMA evolves to a higher state of mind.',

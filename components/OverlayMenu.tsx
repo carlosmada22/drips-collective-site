@@ -110,7 +110,15 @@ const OverlayMenu: React.FC<OverlayMenuProps> = ({
             aria-label={social.platform}
             tabIndex={isOpen ? 0 : -1}
           >
-            {social.icon && <social.icon size={24} />}
+            {social.iconSrc ? (
+              <img
+                src={social.iconSrc}
+                alt={social.platform}
+                className="w-[24px] h-[24px] object-contain opacity-90"
+              />
+            ) : (
+              social.icon && <social.icon size={24} />
+            )}
           </a>
         ))}
       </div>

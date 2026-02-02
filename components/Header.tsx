@@ -87,7 +87,15 @@ const Header: React.FC = () => {
                   aria-label={social.platform}
                   className="hover:opacity-60 transition-opacity duration-300"
                 >
-                  {social.icon && <social.icon size={18} strokeWidth={1.5} />}
+                  {social.iconSrc ? (
+                    <img
+                      src={social.iconSrc}
+                      alt={social.platform}
+                      className="w-[18px] h-[18px] object-contain opacity-90"
+                    />
+                  ) : (
+                    social.icon && <social.icon size={18} strokeWidth={1.5} />
+                  )}
                 </a>
               ))}
             </div>

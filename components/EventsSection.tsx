@@ -4,6 +4,7 @@ import { EVENTS } from '../constants';
 import { Event } from '../types';
 import Marquee from './Marquee';
 import Reveal from './Reveal';
+import eventsBg from '../src/assets/bg/10h.png';
 
 const getEventTime = (event: Event) => {
   const time = Date.parse(event.startDateISO);
@@ -94,9 +95,9 @@ const EventsSection: React.FC = () => {
       {/* Background Image & Overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://picsum.photos/1920/1080?grayscale&blur=2"
+          src={eventsBg}
           alt="Crowd Background"
-          className="w-full h-full object-cover opacity-30"
+          className="w-full h-full object-cover opacity-30 blur-[2px]"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-90"></div>
       </div>

@@ -72,7 +72,11 @@ const Stream: React.FC = () => {
     <div className="bg-black text-white">
       <section className="relative w-full min-h-[35vh] md:min-h-[40vh] flex items-center justify-center text-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src={streamsHero} alt="Streams hero" className="w-full h-full object-cover" />
+          <img
+            src={streamsHero}
+            alt="Streams hero"
+            className="w-full h-full object-cover blur-[3px]"
+          />
           <div className="absolute inset-0 bg-black/20"></div>
         </div>
         <div className="relative z-10 container mx-auto px-6 md:px-12">

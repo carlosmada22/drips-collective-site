@@ -111,7 +111,15 @@ const Footer: React.FC = () => {
               className="hover:text-gray-400 transition-colors duration-300"
               aria-label={social.platform}
             >
-              {social.icon && <social.icon size={20} />}
+              {social.iconSrc ? (
+                <img
+                  src={social.iconSrc}
+                  alt={social.platform}
+                  className="w-[20px] h-[20px] object-contain opacity-90 hover:opacity-60 transition-opacity duration-300"
+                />
+              ) : (
+                social.icon && <social.icon size={20} />
+              )}
             </a>
           ))}
         </div>
