@@ -114,11 +114,11 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
         <div className="max-h-[85vh] overflow-y-auto">
           <div className="grid gap-10 p-8 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:p-12">
             <div className="w-full">
-              <div className="mx-auto aspect-[2/3] w-full max-w-md overflow-hidden bg-gray-900 shadow-2xl">
+              <div className="mx-auto aspect-[2/3] w-full max-w-lg overflow-hidden bg-black shadow-2xl">
                 <img
                   src={event.posterSrc}
                   alt={event.displayTitle}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-contain"
                 />
               </div>
             </div>
@@ -161,7 +161,7 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
                   rel="noreferrer"
                   className="inline-flex items-center justify-center px-10 py-4 min-w-[180px] bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white transition-colors duration-300 uppercase tracking-widest text-sm font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
                 >
-                  VIEW EVENT
+                  TICKETS
                 </a>
               </div>
             </div>

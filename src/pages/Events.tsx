@@ -46,39 +46,24 @@ const EventCard: React.FC<{ event: Event; onOpen: (event: Event, trigger: HTMLEl
           onKeyDown={handleKeyDown}
           className="group"
         >
-          <div className="relative mx-auto aspect-[2/3] w-full max-w-xs overflow-hidden bg-gray-900 shadow-2xl">
+          <div className="relative mx-auto aspect-[2/3] w-full max-w-md md:max-w-lg overflow-hidden bg-black shadow-2xl">
             <img
               src={event.posterSrc}
               alt={event.displayTitle}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
           </div>
 
-          <div className="mt-6 flex flex-col md:flex-row md:items-start md:justify-between gap-5 text-center md:text-left">
-            <div className="flex-1">
-              <h3 className="text-2xl md:text-3xl font-heading uppercase tracking-widest text-white">
-                {event.displayTitle}
-              </h3>
-              <p className="mt-2 text-sm text-gray-300 font-mono tracking-wide">
-                {dateLabel} / {event.timeRange}
-              </p>
-              <p className="mt-2 text-xs text-gray-500 font-mono tracking-[0.3em] uppercase">
-                {event.venue}
-              </p>
-            </div>
-
-            <div className="md:pt-1 shrink-0 flex justify-center md:justify-end">
-              <a
-                href={event.raUrl}
-                target="_blank"
-                rel="noreferrer"
-                onClick={(clickEvent) => clickEvent.stopPropagation()}
-                onKeyDown={(keyboardEvent) => keyboardEvent.stopPropagation()}
-                className="inline-flex items-center justify-center px-10 py-4 min-w-[180px] bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white transition-colors duration-300 uppercase tracking-widest text-sm font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
-              >
-                VIEW EVENT
-              </a>
-            </div>
+          <div className="mt-6 text-center">
+            <h3 className="text-2xl md:text-3xl font-heading uppercase tracking-widest text-white">
+              {event.displayTitle}
+            </h3>
+            <p className="mt-2 text-sm text-gray-300 font-mono tracking-wide">
+              {dateLabel} / {event.timeRange}
+            </p>
+            <p className="mt-2 text-xs text-gray-500 font-mono tracking-[0.3em] uppercase">
+              {event.venue}
+            </p>
           </div>
         </div>
       </div>
