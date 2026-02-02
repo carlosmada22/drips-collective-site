@@ -114,21 +114,32 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
         <div className="max-h-[85vh] overflow-y-auto">
           <div className="grid gap-10 p-8 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:p-12">
             <div className="w-full">
-              <div className="mx-auto aspect-[2/3] w-full max-w-lg overflow-hidden bg-black shadow-2xl">
-                <img
-                  src={event.posterSrc}
-                  alt={event.displayTitle}
-                  className="h-full w-full object-contain"
-                />
+              <div className="mx-auto w-full max-w-lg">
+                <div className="aspect-[2/3] w-full overflow-hidden bg-black shadow-2xl">
+                  <img
+                    src={event.posterSrc}
+                    alt={event.displayTitle}
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+                <div className="mt-4">
+                  <a
+                    href={event.raUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex w-full items-center justify-center px-10 py-4 bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white transition-colors duration-300 uppercase tracking-widest text-sm font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                  >
+                    TICKETS
+                  </a>
+                </div>
               </div>
             </div>
 
             <div className="flex flex-col gap-6 text-left">
               <div>
-                <p className="text-xs font-mono tracking-[0.4em] text-gray-500 uppercase">Event</p>
                 <h3
                   id="event-modal-title"
-                  className="mt-2 text-2xl md:text-3xl font-heading uppercase tracking-widest text-white"
+                  className="text-2xl md:text-3xl font-heading uppercase tracking-widest text-white"
                 >
                   {event.displayTitle}
                 </h3>
@@ -154,16 +165,6 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
                 </p>
               </div>
 
-              <div className="pt-2">
-                <a
-                  href={event.raUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center px-10 py-4 min-w-[180px] bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white transition-colors duration-300 uppercase tracking-widest text-sm font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
-                >
-                  TICKETS
-                </a>
-              </div>
             </div>
           </div>
         </div>

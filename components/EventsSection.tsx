@@ -48,14 +48,14 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
   return (
     <Link
       to={`/events#${eventHash}`}
-      className="group block w-full max-w-lg mx-auto transform transition-all duration-500 hover:scale-[1.02]"
+      className="group block w-full max-w-xl mx-auto transform transition-all duration-500 hover:scale-[1.02]"
     >
-      <div className="mx-auto w-full max-w-xs">
+      <div className="mx-auto w-full max-w-sm md:max-w-md">
         <div className="relative mx-auto aspect-[2/3] w-full overflow-hidden bg-gray-900 shadow-2xl">
           <img
             src={event.posterSrc}
             alt={event.displayTitle}
-            className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+            className="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-500"
           />
 
           {/* Date Badge */}

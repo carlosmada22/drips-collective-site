@@ -23,8 +23,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
       <div className="space-y-6">
         <div>
-          <p className="text-xs tracking-[0.35em] uppercase text-gray-400 font-body">DRIPS Collective</p>
-          <h2 className="mt-3 text-2xl md:text-3xl font-heading tracking-[0.3em] uppercase">
+          <h2 className="text-2xl md:text-3xl font-heading tracking-[0.3em] uppercase">
             {product.name}
           </h2>
           <p className="mt-3 text-sm text-gray-300 font-body">{product.description}</p>

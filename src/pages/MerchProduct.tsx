@@ -96,8 +96,7 @@ const MerchProduct: React.FC = () => {
 
             <div className="space-y-10">
               <div>
-                <p className="text-xs tracking-[0.35em] uppercase text-gray-400 font-body">DRIPS Collective</p>
-                <h1 className="mt-3 text-3xl md:text-4xl font-heading tracking-[0.3em] uppercase">
+                <h1 className="text-3xl md:text-4xl font-heading tracking-[0.3em] uppercase">
                   {product.name}
                 </h1>
                 <p className="mt-3 text-sm text-gray-300 font-body max-w-xl">{product.description}</p>

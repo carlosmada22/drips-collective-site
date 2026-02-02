@@ -37,8 +37,8 @@ const EventCard: React.FC<{ event: Event; onOpen: (event: Event, trigger: HTMLEl
   };
 
   return (
-    <article id={`event-${event.slug}`} className="py-8">
-      <div className="mx-auto w-full max-w-3xl">
+    <article id={`event-${event.slug}`} className="py-6">
+      <div className="mx-auto w-full max-w-2xl">
         <div
           role="button"
           tabIndex={0}
@@ -46,7 +46,7 @@ const EventCard: React.FC<{ event: Event; onOpen: (event: Event, trigger: HTMLEl
           onKeyDown={handleKeyDown}
           className="group"
         >
-          <div className="relative mx-auto aspect-[2/3] w-full max-w-md md:max-w-lg overflow-hidden bg-black shadow-2xl">
+          <div className="relative mx-auto aspect-[2/3] w-full max-w-sm md:max-w-md overflow-hidden bg-black shadow-2xl">
             <img
               src={event.posterSrc}
               alt={event.displayTitle}
@@ -54,7 +54,7 @@ const EventCard: React.FC<{ event: Event; onOpen: (event: Event, trigger: HTMLEl
             />
           </div>
 
-          <div className="mt-6 text-center">
+          <div className="mt-4 text-center">
             <h3 className="text-2xl md:text-3xl font-heading uppercase tracking-widest text-white">
               {event.displayTitle}
             </h3>

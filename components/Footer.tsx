@@ -101,7 +101,7 @@ const Footer: React.FC = () => {
         
         {/* Newsletter */}
         <Reveal as="div" className="w-full max-w-xl mb-20">
-          <h3 className="text-2xl font-heading uppercase tracking-widest mb-4">SUBSCRIBE TO OUR NEWSLETTER</h3>
+          <h3 className="text-2xl font-heading uppercase tracking-widest mb-4">JOIN OUR TELEGRAM CHANNEL</h3>
           <p className="text-gray-400 text-sm mb-8 tracking-wide font-body">
             Be the first to know about upcoming warehouse events and releases.
           </p>
@@ -146,11 +146,11 @@ const Footer: React.FC = () => {
         {/* Brand & Info */}
         <div className="mb-12 space-y-2">
           <h4 className="text-xl font-heading font-bold uppercase tracking-widest mb-6">DRIPS COLLECTIVE</h4>
-          <p className="text-sm text-gray-400 font-mono">123 WAREHOUSE DISTRICT, BERLIN</p>
+          <p className="text-sm text-gray-400 font-mono">BERLIN, GERMANY</p>
           <div className="flex flex-col gap-1 text-sm text-gray-400 font-mono mt-4">
-             <a href="mailto:tickets@drips.com" className="hover:text-white transition-colors">TICKETS@DRIPS.COM</a>
-             <a href="mailto:info@drips.com" className="hover:text-white transition-colors">INFO@DRIPS.COM</a>
-             <a href="mailto:booking@drips.com" className="hover:text-white transition-colors">BOOKING@DRIPS.COM</a>
+             <a href="mailto:collectivedrips@gmail.com" className="hover:text-white transition-colors">
+               collectivedrips@gmail.com
+             </a>
           </div>
         </div>
 
