@@ -1,12 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Button from './ui/Button';
+import React, { useEffect, useRef } from 'react';
 import { SOCIAL_LINKS } from '../constants';
 import footerBg from '../src/assets/bg/3h.png';
 import Reveal from './Reveal';
 
 const Footer: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const footerRef = useRef<HTMLElement>(null);
   const backgroundRef = useRef<HTMLDivElement>(null);
 
@@ -73,16 +70,6 @@ const Footer: React.FC = () => {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !email.includes('@')) {
-      setStatus('error');
-      return;
-    }
-    // Simulate API call
-    setTimeout(() => setStatus('success'), 1000);
-  };
-
   return (
     <footer ref={footerRef} className="relative bg-black text-white pt-24 pb-12 overflow-hidden">
       
@@ -105,28 +92,14 @@ const Footer: React.FC = () => {
           <p className="text-gray-400 text-sm mb-8 tracking-wide font-body">
             Be the first to know about upcoming warehouse events and releases.
           </p>
-          
-          {status === 'success' ? (
-            <div className="p-4 border border-green-500/50 text-green-400 text-sm tracking-widest uppercase">
-              You have been subscribed.
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
-              <input 
-                type="email" 
-                placeholder="YOUR@EMAIL.COM" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 bg-white text-black px-4 py-3 text-sm focus:outline-none placeholder:text-gray-500 rounded-none uppercase tracking-wide"
-              />
-              <Button type="submit" label="Sign Up" variant="solid" />
-            </form>
-          )}
-          {status === 'error' && (
-            <p className="mt-2 text-red-500 text-xs uppercase tracking-wide font-body">
-              Please enter a valid email.
-            </p>
-          )}
+          <a
+            href="https://t.me/dripscollective"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex w-full sm:w-auto items-center justify-center px-10 py-4 bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white transition-colors duration-300 uppercase tracking-widest text-sm font-medium"
+          >
+            JOIN TELEGRAM
+          </a>
         </Reveal>
 
         {/* Socials */}
@@ -145,7 +118,6 @@ const Footer: React.FC = () => {
 
         {/* Brand & Info */}
         <div className="mb-12 space-y-2">
-          <h4 className="text-xl font-heading font-bold uppercase tracking-widest mb-6">DRIPS COLLECTIVE</h4>
           <p className="text-sm text-gray-400 font-mono">BERLIN, GERMANY</p>
           <div className="flex flex-col gap-1 text-sm text-gray-400 font-mono mt-4">
              <a href="mailto:collectivedrips@gmail.com" className="hover:text-white transition-colors">

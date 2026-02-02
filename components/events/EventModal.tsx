@@ -115,14 +115,14 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
           <div className="grid gap-10 p-8 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:p-12">
             <div className="w-full">
               <div className="mx-auto w-full max-w-lg">
-                <div className="aspect-[2/3] w-full overflow-hidden bg-black shadow-2xl">
+                <div className="w-full shadow-2xl">
                   <img
                     src={event.posterSrc}
                     alt={event.displayTitle}
-                    className="h-full w-full object-contain"
+                    className="w-full h-auto object-contain"
                   />
                 </div>
-                <div className="mt-4">
+                <div className="mt-2">
                   <a
                     href={event.raUrl}
                     target="_blank"

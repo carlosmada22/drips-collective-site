@@ -46,22 +46,22 @@ const EventCard: React.FC<{ event: Event; onOpen: (event: Event, trigger: HTMLEl
           onKeyDown={handleKeyDown}
           className="group"
         >
-          <div className="relative mx-auto aspect-[2/3] w-full max-w-sm md:max-w-md overflow-hidden bg-black shadow-2xl">
+          <div className="relative mx-auto w-full max-w-sm md:max-w-md shadow-2xl">
             <img
               src={event.posterSrc}
               alt={event.displayTitle}
-              className="w-full h-full object-contain"
+              className="w-full h-auto object-contain"
             />
           </div>
 
-          <div className="mt-4 text-center">
+          <div className="mt-2 text-center">
             <h3 className="text-2xl md:text-3xl font-heading uppercase tracking-widest text-white">
               {event.displayTitle}
             </h3>
-            <p className="mt-2 text-sm text-gray-300 font-mono tracking-wide">
+            <p className="mt-1 text-sm text-gray-300 font-mono tracking-wide">
               {dateLabel} / {event.timeRange}
             </p>
-            <p className="mt-2 text-xs text-gray-500 font-mono tracking-[0.3em] uppercase">
+            <p className="mt-1 text-xs text-gray-500 font-mono tracking-[0.3em] uppercase">
               {event.venue}
             </p>
           </div>
