@@ -54,14 +54,14 @@ const EventCard: React.FC<{ event: Event; onOpen: (event: Event, trigger: HTMLEl
             />
           </div>
 
-          <div className="mt-2 text-center">
+          <div className="mt-3 text-center">
             <h3 className="text-2xl md:text-3xl font-heading uppercase tracking-widest text-white">
               {event.displayTitle}
             </h3>
-            <p className="mt-1 text-sm text-gray-300 font-mono tracking-wide">
+            <p className="mt-2 text-sm text-gray-300 font-mono tracking-wide">
               {dateLabel} / {event.timeRange}
             </p>
-            <p className="mt-1 text-xs text-gray-500 font-mono tracking-[0.3em] uppercase">
+            <p className="mt-2 text-xs text-gray-500 font-mono tracking-[0.3em] uppercase">
               {event.venue}
             </p>
           </div>

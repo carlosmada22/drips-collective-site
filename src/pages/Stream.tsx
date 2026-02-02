@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import SoundCloudEmbed from '../../components/SoundCloudEmbed';
-import streamsHero from '../assets/bg/6h.png';
+import streamsHero from '../assets/bg/8h.png';
 
 declare global {
   interface Window {
@@ -15,15 +15,15 @@ type SoundCloudWidget = {
 
 const soundCloudSessions = [
   {
-    title: 'SESSION 01 - CONVERGENCE VA',
+    title: 'CONVERGENCE VA',
     trackUrl: 'https://soundcloud.com/drips-collective/sets/convergence-va-drips001',
   },
   {
-    title: 'SESSION 02 - DRIP SESSIONS 1',
+    title: 'DRIP SESSIONS 1 - MAURER',
     trackUrl: 'https://soundcloud.com/drips-collective/drip-sessions-1-maurer',
   },
   {
-    title: 'SESSION 03 - DRIP SESSIONS 3',
+    title: 'DRIP SESSIONS 3 - VOICEX',
     trackUrl: 'https://soundcloud.com/drips-collective/drip-sessions-3-voicex',
   },
 ];
@@ -108,7 +108,7 @@ const Stream: React.FC = () => {
       <section className="py-16 border-t border-white/10">
         <div className="container mx-auto px-6 md:px-12">
           <h2 className="text-xl font-heading tracking-[0.35em] uppercase text-gray-200">
-            SPOTIFY
+            THE ARTISTS
           </h2>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
             {spotifyEmbeds.map((embed) => (

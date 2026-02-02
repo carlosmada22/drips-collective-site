@@ -51,11 +51,11 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
       className="group block w-full max-w-xl mx-auto transform transition-all duration-500 hover:scale-[1.02]"
     >
       <div className="mx-auto w-full max-w-sm md:max-w-md">
-        <div className="relative mx-auto aspect-[2/3] w-full overflow-hidden bg-gray-900 shadow-2xl">
+        <div className="relative mx-auto w-full shadow-2xl">
           <img
             src={event.posterSrc}
             alt={event.displayTitle}
-            className="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+            className="w-full h-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-500"
           />
 
           {/* Date Badge */}
