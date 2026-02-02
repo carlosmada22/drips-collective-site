@@ -160,7 +160,7 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
                 <p className="text-xs tracking-[0.3em] uppercase text-gray-500 font-mono">
                   Description
                 </p>
-                <p className="mt-3 whitespace-pre-line text-sm text-gray-300 font-body leading-relaxed tracking-normal normal-case">
+                <p className="mt-3 whitespace-pre-line text-sm text-gray-300 drips-body font-normal leading-relaxed tracking-normal normal-case">
                   {event.description}
                 </p>
               </div>

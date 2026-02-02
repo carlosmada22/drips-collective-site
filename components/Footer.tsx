@@ -90,7 +90,7 @@ const Footer: React.FC = () => {
         {/* Newsletter */}
         <Reveal as="div" className="w-full max-w-xl mb-20">
           <h3 className="text-2xl font-heading uppercase tracking-widest mb-4">JOIN OUR TELEGRAM CHANNEL</h3>
-          <p className="text-gray-400 text-sm mb-8 tracking-normal leading-relaxed font-body normal-case">
+          <p className="text-gray-400 text-sm mb-8 tracking-normal leading-relaxed drips-body font-normal normal-case">
             Be the first to know about upcoming warehouse events and releases.
           </p>
           <a
@@ -136,7 +136,7 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Legal / Cookie */}
-        <div className="w-full flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-white/10 text-[10px] text-gray-600 tracking-normal font-body normal-case">
+        <div className="w-full flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-white/10 text-[10px] text-gray-600 tracking-normal drips-body font-normal normal-case">
            <span>&copy; {new Date().getFullYear()} DRIPS Collective. All rights reserved.</span>
            <div className="flex gap-6 mt-4 sm:mt-0">
              <Link
