@@ -15,6 +15,7 @@ import LabelDetail from './src/pages/LabelDetail';
 import Residents from './src/pages/Residents';
 import ResidentDetail from './src/pages/ResidentDetail';
 import PrivacyPolicy from './src/pages/PrivacyPolicy';
+import CookiePolicy from './src/pages/CookiePolicy';
 import TermsOfService from './src/pages/TermsOfService';
 import Shop from './src/pages/Shop';
 import Merch from './src/pages/Merch';
@@ -22,6 +23,7 @@ import MerchProduct from './src/pages/MerchProduct';
 import Checkout from './src/pages/Checkout';
 import CheckoutSuccess from './src/pages/CheckoutSuccess';
 import { CartProvider } from './src/context/CartContext';
+import { CookieConsentProvider } from './src/context/CookieConsentContext';
 
 const INTRO_STORAGE_KEY = 'drips-intro-loader-seen';
 
@@ -49,30 +51,33 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <CartProvider>
-        {showIntro && <IntroLoader onDone={handleIntroDone} />}
-        <ScrollToTop />
-        <Routes>
-          <Route element={<Shell />}>
-            <Route index element={<Home />} />
-            <Route path="events" element={<Events />} />
-            <Route path="events/:slug" element={<EventDetail />} />
-            <Route path="merch" element={<Merch />} />
-            <Route path="merch/:id" element={<MerchProduct />} />
-            <Route path="checkout" element={<Checkout />} />
-            <Route path="checkout/success" element={<CheckoutSuccess />} />
-            <Route path="streams" element={<Stream />} />
-            <Route path="shop" element={<Shop />} />
-            <Route path="label" element={<Label />} />
-            <Route path="label/:slug" element={<LabelDetail />} />
-            <Route path="blog" element={<Blog />} />
-            <Route path="blog/:slug" element={<BlogDetail />} />
-            <Route path="residents" element={<Residents />} />
-            <Route path="residents/:slug" element={<ResidentDetail />} />
-            <Route path="about" element={<About />} />
-            <Route path="privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="terms-of-service" element={<TermsOfService />} />
-          </Route>
-        </Routes>
+        <CookieConsentProvider>
+          {showIntro && <IntroLoader onDone={handleIntroDone} />}
+          <ScrollToTop />
+          <Routes>
+            <Route element={<Shell />}>
+              <Route index element={<Home />} />
+              <Route path="events" element={<Events />} />
+              <Route path="events/:slug" element={<EventDetail />} />
+              <Route path="merch" element={<Merch />} />
+              <Route path="merch/:id" element={<MerchProduct />} />
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="checkout/success" element={<CheckoutSuccess />} />
+              <Route path="streams" element={<Stream />} />
+              <Route path="shop" element={<Shop />} />
+              <Route path="label" element={<Label />} />
+              <Route path="label/:slug" element={<LabelDetail />} />
+              <Route path="blog" element={<Blog />} />
+              <Route path="blog/:slug" element={<BlogDetail />} />
+              <Route path="residents" element={<Residents />} />
+              <Route path="residents/:slug" element={<ResidentDetail />} />
+              <Route path="about" element={<About />} />
+              <Route path="privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="cookie-policy" element={<CookiePolicy />} />
+              <Route path="terms-of-service" element={<TermsOfService />} />
+            </Route>
+          </Routes>
+        </CookieConsentProvider>
       </CartProvider>
     </BrowserRouter>
   );

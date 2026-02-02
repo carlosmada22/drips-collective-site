@@ -1,5 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import SoundCloudEmbed from '../../components/SoundCloudEmbed';
+import CookieNotice from '../../components/CookieNotice';
+import useCookieConsent from '../../hooks/useCookieConsent';
 import streamsHero from '../assets/bg/8h.png';
 
 declare global {
@@ -31,13 +33,13 @@ const soundCloudSessions = [
 const spotifyEmbeds = [
   {
     url: 'https://open.spotify.com/embed/artist/2Mz4xppLRLkIsvMFb9STKO',
-    height: 380,
   },
   {
     url: 'https://open.spotify.com/embed/artist/1Ox2d4YKQFfuxBIUEQc65o',
-    height: 380,
   },
 ];
+
+const SPOTIFY_EMBED_HEIGHT = 380;
 
 const buildSoundCloudEmbedUrl = (trackUrl: string) =>
   `https://w.soundcloud.com/player/?url=${encodeURIComponent(
@@ -46,6 +48,7 @@ const buildSoundCloudEmbedUrl = (trackUrl: string) =>
 
 const Stream: React.FC = () => {
   const soundCloudWidgetsRef = useRef<SoundCloudWidget[]>([]);
+  const { isAccepted } = useCookieConsent();
 
   const pauseAllSoundCloud = useCallback((except?: SoundCloudWidget) => {
     soundCloudWidgetsRef.current.forEach((widget) => {
@@ -116,16 +119,24 @@ const Stream: React.FC = () => {
           </h2>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
             {spotifyEmbeds.map((embed) => (
-              <iframe
+              <div
                 key={embed.url}
-                title="Spotify artist"
-                src={embed.url}
-                width="100%"
-                height={embed.height}
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"
-                className="rounded-md border border-white/10"
-              />
+                className="rounded-md border border-white/10 overflow-hidden bg-black h-[380px]"
+              >
+                {isAccepted ? (
+                  <iframe
+                    title="Spotify artist"
+                    src={embed.url}
+                    width="100%"
+                    height={SPOTIFY_EMBED_HEIGHT}
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"
+                    className="w-full h-full"
+                  />
+                ) : (
+                  <CookieNotice />
+                )}
+              </div>
             ))}
           </div>
         </div>

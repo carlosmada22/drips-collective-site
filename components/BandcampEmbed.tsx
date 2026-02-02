@@ -1,4 +1,6 @@
 import React from 'react';
+import useCookieConsent from '../hooks/useCookieConsent';
+import CookieNotice from './CookieNotice';
 
 type BandcampEmbedProps = {
   src: string;
@@ -7,17 +9,23 @@ type BandcampEmbedProps = {
 };
 
 const BandcampEmbed: React.FC<BandcampEmbedProps> = ({ src, title, href }) => {
+  const { isAccepted } = useCookieConsent();
+
   return (
     <div className="space-y-6">
       <div className="w-full overflow-hidden border border-white/10 bg-black">
         <div className="aspect-[4/5] sm:aspect-square">
-          <iframe
-            src={src}
-            title={title}
-            className="w-full h-full border-0"
-            scrolling="no"
-            loading="lazy"
-          />
+          {isAccepted ? (
+            <iframe
+              src={src}
+              title={title}
+              className="w-full h-full border-0"
+              scrolling="no"
+              loading="lazy"
+            />
+          ) : (
+            <CookieNotice />
+          )}
         </div>
       </div>
       <div className="flex justify-center">

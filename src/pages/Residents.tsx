@@ -3,6 +3,8 @@ import { ChevronDown } from 'lucide-react';
 import { RESIDENTS } from '../../constants';
 import PageHero from '../../components/PageHero';
 import Reveal from '../../components/Reveal';
+import CookieNotice from '../../components/CookieNotice';
+import useCookieConsent from '../../hooks/useCookieConsent';
 
 const Accordion: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,6 +35,8 @@ const Accordion: React.FC<{ title: string; children: React.ReactNode }> = ({ tit
 };
 
 const Residents: React.FC = () => {
+  const { isAccepted } = useCookieConsent();
+
   return (
     <>
       <PageHero
@@ -129,13 +133,17 @@ const Residents: React.FC = () => {
 
               <div className="mt-8 max-w-4xl mx-auto border border-white/10 overflow-hidden">
                 <div className="aspect-video">
-                  <iframe
-                    src={resident.youtubeEmbedUrl}
-                    title={`${resident.name} video`}
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
+                  {isAccepted ? (
+                    <iframe
+                      src={resident.youtubeEmbedUrl}
+                      title={`${resident.name} video`}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <CookieNotice />
+                  )}
                 </div>
               </div>
             </Reveal>

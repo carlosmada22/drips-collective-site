@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import useCookieConsent from '../hooks/useCookieConsent';
+import CookieNotice from './CookieNotice';
 
 declare global {
   interface Window {
@@ -63,8 +65,13 @@ const SoundCloudEmbed: React.FC<SoundCloudEmbedProps> = ({
   onPlay,
 }) => {
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const { isAccepted } = useCookieConsent();
 
   useEffect(() => {
+    if (!isAccepted) {
+      return;
+    }
+
     let widget: SoundCloudWidget | null = null;
     let isMounted = true;
 
@@ -88,7 +95,17 @@ const SoundCloudEmbed: React.FC<SoundCloudEmbedProps> = ({
         widget.unbind(window.SC.Widget.Events.PLAY);
       }
     };
-  }, [onPlay, registerWidget, url]);
+  }, [isAccepted, onPlay, registerWidget, url]);
+
+  if (!isAccepted) {
+    return (
+      <div className="w-full rounded-md overflow-hidden border border-white/10">
+        <div className="h-[320px]">
+          <CookieNotice />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <iframe

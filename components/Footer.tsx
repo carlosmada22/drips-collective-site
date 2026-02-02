@@ -151,13 +151,13 @@ const Footer: React.FC = () => {
              >
                Terms of Service
              </Link>
-             <a
-               href="#cookies"
-               className="underline decoration-gray-700 underline-offset-4 hover:text-gray-400 transition-colors"
-             >
-               Cookie Preferences
-             </a>
-           </div>
+            <Link
+              to="/cookie-policy"
+              className="underline decoration-gray-700 underline-offset-4 hover:text-gray-400 transition-colors"
+            >
+              Cookie Preferences
+            </Link>
+          </div>
         </div>
 
       </div>
