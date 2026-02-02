@@ -14,6 +14,7 @@ import Label from './src/pages/Label';
 import LabelDetail from './src/pages/LabelDetail';
 import Residents from './src/pages/Residents';
 import ResidentDetail from './src/pages/ResidentDetail';
+import PrivacyPolicy from './src/pages/PrivacyPolicy';
 import Shop from './src/pages/Shop';
 import Merch from './src/pages/Merch';
 import MerchProduct from './src/pages/MerchProduct';
@@ -67,6 +68,7 @@ const App: React.FC = () => {
             <Route path="residents" element={<Residents />} />
             <Route path="residents/:slug" element={<ResidentDetail />} />
             <Route path="about" element={<About />} />
+            <Route path="privacy-policy" element={<PrivacyPolicy />} />
           </Route>
         </Routes>
       </CartProvider>

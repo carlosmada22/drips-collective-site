@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { SOCIAL_LINKS } from '../constants';
 import footerBg from '../src/assets/bg/3h.png';
 import Reveal from './Reveal';
@@ -138,7 +139,9 @@ const Footer: React.FC = () => {
         <div className="w-full flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-white/10 text-[10px] text-gray-600 uppercase tracking-widest">
            <span>&copy; {new Date().getFullYear()} DRIPS COLLECTIVE. ALL RIGHTS RESERVED.</span>
            <div className="flex gap-6 mt-4 sm:mt-0">
-             <a href="#privacy" className="hover:text-gray-400 transition-colors">Privacy Policy</a>
+             <Link to="/privacy-policy" className="hover:text-gray-400 transition-colors">
+               Privacy Policy
+             </Link>
              <a href="#terms" className="hover:text-gray-400 transition-colors">Terms of Service</a>
              <a href="#cookies" className="hover:text-gray-400 transition-colors underline decoration-gray-700 underline-offset-4">Cookie Preferences</a>
            </div>
