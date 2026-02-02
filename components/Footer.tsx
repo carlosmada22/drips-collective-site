@@ -139,11 +139,24 @@ const Footer: React.FC = () => {
         <div className="w-full flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-white/10 text-[10px] text-gray-600 uppercase tracking-widest">
            <span>&copy; {new Date().getFullYear()} DRIPS COLLECTIVE. ALL RIGHTS RESERVED.</span>
            <div className="flex gap-6 mt-4 sm:mt-0">
-             <Link to="/privacy-policy" className="hover:text-gray-400 transition-colors">
+             <Link
+               to="/privacy-policy"
+               className="underline decoration-gray-700 underline-offset-4 hover:text-gray-400 transition-colors"
+             >
                Privacy Policy
              </Link>
-             <a href="#terms" className="hover:text-gray-400 transition-colors">Terms of Service</a>
-             <a href="#cookies" className="hover:text-gray-400 transition-colors underline decoration-gray-700 underline-offset-4">Cookie Preferences</a>
+             <Link
+               to="/terms-of-service"
+               className="underline decoration-gray-700 underline-offset-4 hover:text-gray-400 transition-colors"
+             >
+               Terms of Service
+             </Link>
+             <a
+               href="#cookies"
+               className="underline decoration-gray-700 underline-offset-4 hover:text-gray-400 transition-colors"
+             >
+               Cookie Preferences
+             </a>
            </div>
         </div>
 
