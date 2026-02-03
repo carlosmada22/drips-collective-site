@@ -52,6 +52,7 @@ const Residents: React.FC = () => {
             <Reveal
               key={resident.id}
               as="article"
+              id={`resident-${resident.slug}`}
               className="pb-16 border-b border-white/10 last:border-b-0 last:pb-0"
               delay={Math.min(index * 120, 240)}
             >

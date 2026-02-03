@@ -17,19 +17,29 @@ const ResidentsSection: React.FC = () => {
         <Reveal as="div" className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-16">
           {RESIDENTS.map((resident) => (
             <div key={resident.id} className="group flex flex-col items-center">
-              <div className="w-full max-w-[480px] aspect-[3/4] overflow-hidden bg-gray-900 mb-6 relative">
-                 <img 
-                  src={resident.images[0]} 
-                  alt={resident.name} 
+              <Link
+                to={`/residents#resident-${resident.slug}`}
+                className="w-full max-w-[480px] aspect-[3/4] overflow-hidden bg-gray-900 mb-6 relative block"
+              >
+                <img
+                  src={resident.images[0]}
+                  alt={resident.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale contrast-125"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
-              </div>
+              </Link>
               
-              <h3 className="text-xl font-heading uppercase tracking-widest mb-2">{resident.name}</h3>
+              <h3 className="text-xl font-heading uppercase tracking-widest mb-2">
+                <Link
+                  to={`/residents#resident-${resident.slug}`}
+                  className="transition-colors duration-300 hover:text-gray-200"
+                >
+                  {resident.name}
+                </Link>
+              </h3>
               
               <Link
-                to={`/residents/${resident.slug}`}
+                to={`/residents#resident-${resident.slug}`}
                 className="text-xs border-b border-transparent group-hover:border-white transition-all duration-300 pb-0.5 tracking-widest text-gray-400 group-hover:text-white uppercase"
               >
                 About
