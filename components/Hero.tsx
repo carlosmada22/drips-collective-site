@@ -1,11 +1,28 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Button from './ui/Button';
 import { HERO_CTA_LINKS } from '../constants';
 import Reveal from './Reveal';
 import heroVideoMp4 from '../src/assets/videos/entre_risas.mp4';
+import useInView from '../hooks/useInView';
+import { useHomeHeroNav } from '../src/context/HomeHeroNavContext';
 
 const Hero: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const { setHeroNavVisible } = useHomeHeroNav();
+  const { ref: heroNavRef, inView: heroNavInView } = useInView({
+    threshold: 0.25,
+    once: false,
+  });
+
+  useEffect(() => {
+    setHeroNavVisible(heroNavInView);
+  }, [heroNavInView, setHeroNavVisible]);
+
+  useEffect(() => {
+    return () => {
+      setHeroNavVisible(false);
+    };
+  }, [setHeroNavVisible]);
 
   const handleVideoEnded = () => {
     const video = videoRef.current;
@@ -43,17 +60,19 @@ const Hero: React.FC = () => {
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 text-center">
-        <Reveal as="div" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {HERO_CTA_LINKS.map((link) => (
-            <div key={link.label} className="flex justify-center">
-              <Button
-                label={link.label}
-                to={link.to}
-                className="w-full max-w-[200px]"
-              />
-            </div>
-          ))}
-        </Reveal>
+        <div ref={heroNavRef}>
+          <Reveal as="div" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {HERO_CTA_LINKS.map((link) => (
+              <div key={link.label} className="flex justify-center">
+                <Button
+                  label={link.label}
+                  to={link.to}
+                  className="w-full max-w-[200px]"
+                />
+              </div>
+            ))}
+          </Reveal>
+        </div>
       </div>
 
       {/* Scroll indicator (optional but helpful) */}

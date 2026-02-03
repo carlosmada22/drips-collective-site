@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { NAV_LINKS, SOCIAL_LINKS } from '../constants';
 import OverlayMenu from './OverlayMenu';
+import { useHomeHeroNav } from '../src/context/HomeHeroNavContext';
 // @ts-ignore: imported image has no type declarations
 import IsoWhite from "../src/assets/logos/ISOTIPO-BLANCO.png";
 // @ts-ignore: imported image has no type declarations
@@ -15,6 +16,10 @@ const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const wasMenuOpen = useRef(false);
+  const location = useLocation();
+  const { heroNavVisible } = useHomeHeroNav();
+  const isHome = location.pathname === '/';
+  const hideDesktopNav = isHome && heroNavVisible;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,12 +70,18 @@ const Header: React.FC = () => {
           </div>
 
           {/* Desktop Nav */}
-          <nav className="hidden xl:flex items-center gap-8">
+          <nav
+            className={`hidden xl:flex items-center gap-8 transition-opacity duration-300 ${
+              hideDesktopNav ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
+            }`}
+            aria-hidden={hideDesktopNav}
+          >
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.label}
                 to={link.to}
                 className="text-xs font-medium tracking-widest hover:text-gray-400 transition-colors duration-300"
+                tabIndex={hideDesktopNav ? -1 : undefined}
               >
                 {link.label}
               </Link>
