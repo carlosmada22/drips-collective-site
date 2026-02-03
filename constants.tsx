@@ -148,7 +148,7 @@ export const RESIDENTS: Resident[] = [
         email: 'maurer@drips-collective.com',
       },
     },
-    youtubeEmbedUrl: 'https://www.youtube.com/embed/-EVzhOBovMw?si=iZ9PROOrE4qPdq9G',
+    youtubeEmbedUrl: 'https://www.youtube.com/embed/SaFRWYFMjqA?si=rIhMctqDUN2H6IAO',
   },
   {
     id: '2',
