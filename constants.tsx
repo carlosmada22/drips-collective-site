@@ -13,7 +13,8 @@ import tshirt1 from './src/assets/merch/tshirt/1.png';
 import tshirt2 from './src/assets/merch/tshirt/2.png';
 import tshirt3 from './src/assets/merch/tshirt/3.png';
 import tshirt4 from './src/assets/merch/tshirt/4.png';
-import maurerPhoto1 from './src/assets/residents/maurer.jpg';
+import maurerPhoto1 from './src/assets/residents/maurer1.jpg';
+import maurerPhoto2 from './src/assets/residents/maurer2.jpg';
 import voicexPhoto1 from './src/assets/residents/voicex.JPG';
 import voicexPhoto2 from './src/assets/residents/voicex2.jpg';
 import dripsPosterI from './src/assets/events/dripsI.jpg';
@@ -135,7 +136,7 @@ export const RESIDENTS: Resident[] = [
     name: 'MAURER',
     slug: 'maurer',
     bio: "With roots deeply embedded in hip-hop, MAURER's identity as a DJ and producer is marked by his extensive use of sampling in his music. He creates powerful atmospheres and an unmistakable groove that define his unique musical style. MAURER began his music career at the age of 9 in the music conservatory. His interest in electronic music ignited three years later. Originally from Spain, he has lived in the USA, Ibiza, and now calls Berlin his home. Over time, his production skills have evolved, now focusing intensely on hard groove, constantly perfecting and defining his unique sound. Drawing influences from hip hop his style deeply resonates with the underground movement. His journey in the music scene has seen him share venues with renowned artists like Ben Sims and P.E.A.R.L., and perform in prestigious clubs such as Lokschuppen Berlin. MAURER's dvnamic and immersive sets are a testament to his evolving sound and his ability to captivate audiences, making him a notable figure in the electronic music landscape. His sets are distinguished by a percussion-heavy, melody-infused blending of genres such as hard groove and hard techno, seamlessly integrating melodic elements throughout the journey. Moreover, his ability to fluidly and dynamically blend these genres, along with his sensitivity to read and respond to the crowd's energy, ensures a dynamic and immersive club experience in every performance.",
-    images: [maurerPhoto1, maurerPhoto1],
+    images: [maurerPhoto1, maurerPhoto2],
     links: {
       music: {
         soundcloudUrl: 'https://soundcloud.com/maurersc',
