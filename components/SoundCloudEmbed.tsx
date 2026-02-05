@@ -74,6 +74,7 @@ const SoundCloudEmbed: React.FC<SoundCloudEmbedProps> = ({
 
     let widget: SoundCloudWidget | null = null;
     let isMounted = true;
+    let playEvent: string | null = null;
 
     ensureSoundCloudScript()
       .then((SC) => {
@@ -83,7 +84,10 @@ const SoundCloudEmbed: React.FC<SoundCloudEmbedProps> = ({
 
         widget = SC.Widget(iframeRef.current);
         registerWidget(widget);
-        widget.bind(SC.Widget.Events.PLAY, () => onPlay(widget as SoundCloudWidget));
+        playEvent = SC.Widget.Events?.PLAY ?? null;
+        if (playEvent) {
+          widget.bind(playEvent, () => onPlay(widget as SoundCloudWidget));
+        }
       })
       .catch(() => {
         // Best effort only; embeds still render without the API.
@@ -91,8 +95,12 @@ const SoundCloudEmbed: React.FC<SoundCloudEmbedProps> = ({
 
     return () => {
       isMounted = false;
-      if (widget && window.SC?.Widget) {
-        widget.unbind(window.SC.Widget.Events.PLAY);
+      if (widget && playEvent) {
+        try {
+          widget.unbind(playEvent);
+        } catch {
+          // Ignore widget cleanup errors.
+        }
       }
     };
   }, [isAccepted, onPlay, registerWidget, url]);

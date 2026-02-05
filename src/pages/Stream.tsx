@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import SoundCloudEmbed from '../../components/SoundCloudEmbed';
 import CookieNotice from '../../components/CookieNotice';
 import useCookieConsent from '../../hooks/useCookieConsent';
@@ -53,7 +53,11 @@ const Stream: React.FC = () => {
   const pauseAllSoundCloud = useCallback((except?: SoundCloudWidget) => {
     soundCloudWidgetsRef.current.forEach((widget) => {
       if (!except || widget !== except) {
-        widget.pause();
+        try {
+          widget.pause();
+        } catch {
+          // Ignore SoundCloud widget errors during route changes.
+        }
       }
     });
   }, []);
@@ -70,6 +74,19 @@ const Stream: React.FC = () => {
     },
     [pauseAllSoundCloud]
   );
+
+  useEffect(() => {
+    return () => {
+      soundCloudWidgetsRef.current.forEach((widget) => {
+        try {
+          widget.pause();
+        } catch {
+          // Ignore SoundCloud widget errors during unmount.
+        }
+      });
+      soundCloudWidgetsRef.current = [];
+    };
+  }, []);
 
   return (
     <div className="bg-black text-white">
