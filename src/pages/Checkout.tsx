@@ -112,7 +112,7 @@ const Checkout: React.FC = () => {
         <PageHero title="CHECKOUT" description="Your cart is currently empty." />
         <section className="pb-24 bg-black text-white">
           <div className="container mx-auto px-6 md:px-12">
-            <p className="text-gray-300 font-body leading-relaxed tracking-normal normal-case">
+            <p className="text-gray-300 body-copy-font leading-relaxed tracking-normal normal-case">
               Add merch before checking out.
             </p>
           </div>
@@ -260,7 +260,7 @@ const Checkout: React.FC = () => {
               </div>
               <div className="flex items-center justify-between">
                 <span>Shipping</span>
-                <span>{selectedRate ? `${selectedRate.currency} ${selectedRate.rate}` : '—'}</span>
+                <span>{selectedRate ? `${selectedRate.currency} ${selectedRate.rate}` : 'ï¿½'}</span>
               </div>
               <div className="flex items-center justify-between text-white">
                 <span>Total</span>

@@ -22,6 +22,11 @@ import dripsPosterChroma from './src/assets/events/dripsXchroma.jpg';
 import dripsPosterLapsus from './src/assets/events/dripsXlapsus.jpg';
 import dripsPosterVibrant from './src/assets/events/dripsXvibrant.jpg';
 
+export const FEATURES = {
+  // Set merchEnabled to true to re-enable the full Merch experience.
+  merchEnabled: false,
+} as const;
+
 export const NAV_LINKS: NavLink[] = [
   { label: 'EVENTS', to: '/events' },
   { label: 'MERCH', to: '/merch' },
@@ -145,7 +150,7 @@ export const RESIDENTS: Resident[] = [
       },
       contact: {
         instagramUrl: 'https://www.instagram.com/maurer_',
-        email: 'maurer@drips-collective.com',
+        email: 'collectivedrips@gmail.com',
       },
     },
     youtubeEmbedUrl: 'https://www.youtube.com/embed/SaFRWYFMjqA?si=rIhMctqDUN2H6IAO',
@@ -164,7 +169,7 @@ export const RESIDENTS: Resident[] = [
       },
       contact: {
         instagramUrl: 'https://www.instagram.com/voicexmusic',
-        email: 'voicex@drips-collective.com',
+        email: 'collectivedrips@gmail.com',
       },
     },
     youtubeEmbedUrl: 'https://www.youtube.com/embed/7HgGS9ZhSI0?si=Y81t2L06bZ1WVwnB',

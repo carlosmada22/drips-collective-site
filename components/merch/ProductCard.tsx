@@ -26,7 +26,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <h2 className="text-2xl md:text-3xl font-heading tracking-[0.3em] uppercase">
             {product.name}
           </h2>
-          <p className="mt-3 text-sm text-gray-300 font-body leading-relaxed tracking-normal normal-case">
+          <p className="mt-3 text-sm text-gray-300 body-copy-font leading-relaxed tracking-normal normal-case">
             {product.description}
           </p>
           <p className="mt-4 text-lg tracking-[0.3em] font-heading">{formatPrice(product.priceCents)}</p>

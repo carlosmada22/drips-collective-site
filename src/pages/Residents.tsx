@@ -52,7 +52,6 @@ const Residents: React.FC = () => {
             <Reveal
               key={resident.id}
               as="article"
-              id={`resident-${resident.slug}`}
               className="pb-16 border-b border-white/10 last:border-b-0 last:pb-0"
               delay={Math.min(index * 120, 240)}
             >
@@ -68,7 +67,7 @@ const Residents: React.FC = () => {
                   <h2 className="text-2xl md:text-3xl font-heading tracking-[0.4em] uppercase">
                     {resident.name}
                   </h2>
-                  <p className="text-sm md:text-base text-gray-300 drips-body font-normal leading-relaxed tracking-normal normal-case">
+                  <p className="text-sm md:text-base text-gray-300 drips-body font-normal leading-relaxed tracking-normal normal-case text-justify">
                     {resident.bio}
                   </p>
                   <div className="mt-6 text-left">

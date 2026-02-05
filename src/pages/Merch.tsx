@@ -4,8 +4,58 @@ import ProductCard from '../../components/merch/ProductCard';
 import CartPanel from '../../components/merch/CartPanel';
 import merchHeroVideo from '../assets/merch/DRIPS_MODEL.mp4';
 import { MERCH_CATALOG } from '../data/merchCatalog';
+import { FEATURES, SOCIAL_LINKS } from '../../constants';
 
 const Merch: React.FC = () => {
+  const instagramUrl =
+    SOCIAL_LINKS.find((link) => link.platform === 'Instagram')?.url ??
+    'https://www.instagram.com/drips.collective/';
+
+  if (!FEATURES.merchEnabled) {
+    return (
+      <div className="bg-black text-white">
+        <section className="relative w-full min-h-[60vh] flex items-center justify-center text-center overflow-hidden">
+          <div className="absolute inset-0">
+            <video
+              className="w-full h-full object-cover object-[center_28%] scale-[1.12]"
+              autoPlay
+              loop
+              muted
+              playsInline
+            >
+              <source src={merchHeroVideo} type="video/mp4" />
+            </video>
+          </div>
+          <div className="absolute inset-0 bg-black/55" />
+          <div className="relative z-10 container mx-auto px-6 md:px-12">
+            <Reveal as="div">
+              <h1
+                className="font-heading text-3xl md:text-5xl tracking-[0.4em] uppercase"
+                style={{ textShadow: '0 4px 18px rgba(0, 0, 0, 0.35)' }}
+              >
+                <span className="block">MERCH</span>
+                <span className="mt-3 block text-base md:text-lg tracking-[0.6em] text-gray-200">
+                  COMING SOON
+                </span>
+              </h1>
+              <p className="mt-4 text-sm md:text-base text-gray-300 body-copy-font tracking-normal leading-relaxed normal-case">
+                We are finalizing our first drops. Follow our Instagram for updates.
+              </p>
+              <a
+                className="mt-8 inline-flex items-center justify-center px-8 py-3 min-w-[160px] bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white transition-colors duration-300 uppercase tracking-widest text-sm font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                href={instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                FOLLOW ON INSTAGRAM
+              </a>
+            </Reveal>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-black text-white">
       <section className="relative w-full min-h-[50vh] flex items-center justify-center text-center overflow-hidden">
@@ -29,7 +79,7 @@ const Merch: React.FC = () => {
             >
               MERCH
             </h1>
-            <p className="mt-4 text-sm md:text-base text-gray-300 font-body tracking-normal leading-relaxed normal-case">
+            <p className="mt-4 text-sm md:text-base text-gray-300 body-copy-font tracking-normal leading-relaxed normal-case">
               Print on demand. Made when you order.
             </p>
           </Reveal>

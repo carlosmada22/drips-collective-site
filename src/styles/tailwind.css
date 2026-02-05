@@ -10,6 +10,12 @@
     font-family: 'Bebas Neue', sans-serif;
     font-weight: 400;
   }
+
+  .font-body-copy {
+    font-family: 'bebas-neue-pro', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
 }
 
 .reveal-base {
