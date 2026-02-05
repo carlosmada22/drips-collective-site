@@ -35,7 +35,7 @@ const BandcampEmbed: React.FC<BandcampEmbedProps> = ({ src, title, href }) => {
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center px-10 py-4 min-w-[200px] bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white transition-colors duration-300 uppercase tracking-widest text-sm font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
         >
-          OPEN ON BANDCAMP
+          OPEN IN BANDCAMP
         </a>
       </div>
     </div>
