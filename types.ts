@@ -17,12 +17,13 @@ export interface Event {
   displayTitle: string;
   fullTitle: string;
   slug: string;
-  posterSrc: string;
-  startDateISO: string;
-  endDateISO?: string;
+  poster: string;
+  startDateTimeISO: string;
+  endDateTimeISO?: string;
   timeRange: string;
-  venue: string;
-  address?: string;
+  venueName: string;
+  venueAddress: string;
+  cityCountry?: string;
   promoters: string[];
   description: string;
   raUrl: string;

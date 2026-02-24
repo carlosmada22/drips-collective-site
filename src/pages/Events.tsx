@@ -1,19 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { EVENTS } from '../../constants';
 import { Event } from '../../types';
+import { getOrderedEvents, parseEventDate } from '../utils/events';
 import eventsHero from '../assets/bg/7h.png';
 import Reveal from '../../components/Reveal';
 import EventModal from '../../components/events/EventModal';
 
-const getEventTime = (event: Event) => {
-  const time = Date.parse(event.startDateISO);
-  return Number.isNaN(time) ? 0 : time;
-};
-
 const formatEventDate = (event: Event) => {
-  const date = new Date(event.startDateISO);
+  const date = parseEventDate(event);
   if (Number.isNaN(date.getTime())) {
-    return event.startDateISO;
+    return event.startDateTimeISO;
   }
   return new Intl.DateTimeFormat('en-GB', {
     weekday: 'short',
@@ -48,7 +44,7 @@ const EventCard: React.FC<{ event: Event; onOpen: (event: Event, trigger: HTMLEl
         >
           <div className="relative mx-auto w-full max-w-sm md:max-w-md shadow-2xl">
             <img
-              src={event.posterSrc}
+              src={event.poster}
               alt={event.displayTitle}
               className="w-full h-auto object-contain"
             />
@@ -62,7 +58,7 @@ const EventCard: React.FC<{ event: Event; onOpen: (event: Event, trigger: HTMLEl
               {dateLabel} / {event.timeRange}
             </p>
             <p className="mt-2 text-xs text-gray-500 font-mono tracking-[0.3em] uppercase">
-              {event.venue}
+              {event.venueName}
             </p>
           </div>
         </div>
@@ -74,13 +70,7 @@ const EventCard: React.FC<{ event: Event; onOpen: (event: Event, trigger: HTMLEl
 const Events: React.FC = () => {
   const [activeEvent, setActiveEvent] = useState<Event | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
-  const now = Date.now();
-  const upcomingEvents = EVENTS.filter((event) => getEventTime(event) >= now).sort(
-    (a, b) => getEventTime(a) - getEventTime(b)
-  );
-  const pastEvents = EVENTS.filter((event) => getEventTime(event) < now).sort(
-    (a, b) => getEventTime(b) - getEventTime(a)
-  );
+  const { upcoming: upcomingEvents, past: pastEvents } = getOrderedEvents(EVENTS, new Date());
 
   const handleOpenModal = (event: Event, trigger: HTMLElement) => {
     triggerRef.current = trigger;
@@ -123,7 +113,7 @@ const Events: React.FC = () => {
 
           {upcomingEvents.length === 0 ? (
             <p className="mt-8 text-sm text-gray-500 font-mono tracking-wide">
-              Coming soon.
+              COMING SOON.
             </p>
           ) : (
             <div className="mt-4 divide-y divide-white/10">

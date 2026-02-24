@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import useScrollLock from '../../hooks/useScrollLock';
 import type { Event } from '../../types';
+import { linkifyText } from '../../src/utils/linkify';
 
 interface EventModalProps {
   event: Event | null;
@@ -9,9 +10,9 @@ interface EventModalProps {
 }
 
 const formatEventDate = (event: Event) => {
-  const date = new Date(event.startDateISO);
+  const date = new Date(event.startDateTimeISO);
   if (Number.isNaN(date.getTime())) {
-    return event.startDateISO;
+    return event.startDateTimeISO;
   }
   return new Intl.DateTimeFormat('en-GB', {
     weekday: 'short',
@@ -117,7 +118,7 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
               <div className="mx-auto w-full max-w-lg">
                 <div className="w-full shadow-2xl">
                   <img
-                    src={event.posterSrc}
+                    src={event.poster}
                     alt={event.displayTitle}
                     className="w-full h-auto object-contain"
                   />
@@ -150,8 +151,19 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
                   {dateLabel} / {event.timeRange}
                 </p>
                 <p className="text-xs tracking-[0.3em] uppercase text-gray-500">Venue</p>
-                <p className="text-sm text-gray-300">{event.venue}</p>
-                {event.address && <p className="text-sm text-gray-500">{event.address}</p>}
+                <p className="text-sm text-gray-300">{event.venueName}</p>
+                {event.venueAddress ? (
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      `${event.venueName} ${event.venueAddress}`.trim()
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-gray-500 hover:text-gray-300 transition-colors"
+                  >
+                    {event.venueAddress}
+                  </a>
+                ) : null}
                 <p className="text-xs tracking-[0.3em] uppercase text-gray-500 mt-4">Promoters</p>
                 <p className="text-sm text-gray-300">{promotersLabel}</p>
               </div>
@@ -160,9 +172,9 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
                 <p className="text-xs tracking-[0.3em] uppercase text-gray-500 font-mono">
                   Description
                 </p>
-                <p className="mt-3 whitespace-pre-line text-sm text-gray-300 font-body font-normal leading-relaxed tracking-normal normal-case">
-                  {event.description}
-                </p>
+                <div className="mt-3 whitespace-pre-line text-sm text-gray-300 font-body font-normal leading-relaxed tracking-normal normal-case">
+                  {linkifyText(event.description)}
+                </div>
               </div>
 
             </div>

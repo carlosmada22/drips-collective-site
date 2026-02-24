@@ -2,19 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { EVENTS } from '../constants';
 import { Event } from '../types';
+import { getHomeFeaturedEvents, parseEventDate } from '../src/utils/events';
 import Marquee from './Marquee';
 import Reveal from './Reveal';
 import eventsBg from '../src/assets/bg/10h.png';
 
-const getEventTime = (event: Event) => {
-  const time = Date.parse(event.startDateISO);
-  return Number.isNaN(time) ? 0 : time;
-};
-
 const formatEventDate = (event: Event) => {
-  const date = new Date(event.startDateISO);
+  const date = parseEventDate(event);
   if (Number.isNaN(date.getTime())) {
-    return event.startDateISO;
+    return event.startDateTimeISO;
   }
   return new Intl.DateTimeFormat('en-GB', {
     weekday: 'short',
@@ -25,7 +21,7 @@ const formatEventDate = (event: Event) => {
 };
 
 const formatEventMonth = (event: Event) => {
-  const date = new Date(event.startDateISO);
+  const date = parseEventDate(event);
   if (Number.isNaN(date.getTime())) {
     return '';
   }
@@ -33,7 +29,7 @@ const formatEventMonth = (event: Event) => {
 };
 
 const formatEventDay = (event: Event) => {
-  const date = new Date(event.startDateISO);
+  const date = parseEventDate(event);
   if (Number.isNaN(date.getTime())) {
     return '';
   }
@@ -54,7 +50,7 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
       <div className="mx-auto w-full max-w-sm md:max-w-md">
         <div className="relative mx-auto w-full shadow-2xl">
           <img
-            src={event.posterSrc}
+            src={event.poster}
             alt={event.displayTitle}
             className="w-full h-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-500"
           />
@@ -72,7 +68,7 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
           </h3>
           <p className="mt-2 text-sm text-gray-400 font-mono tracking-wide">{dateLabel}</p>
           <p className="mt-2 text-xs text-gray-500 font-mono tracking-[0.3em] uppercase">
-            {event.venue}
+            {event.venueName}
           </p>
         </div>
       </div>
@@ -81,10 +77,13 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
 };
 
 const EventsSection: React.FC = () => {
-  const now = Date.now();
-  const eventsByDateAsc = [...EVENTS].sort((a, b) => getEventTime(a) - getEventTime(b));
-  const pastEvents = eventsByDateAsc.filter((event) => getEventTime(event) < now);
-  const featuredEvents = [...pastEvents].sort((a, b) => getEventTime(b) - getEventTime(a)).slice(0, 2);
+  const now = new Date();
+  const eventsByDateAsc = [...EVENTS].sort((a, b) => {
+    const aTime = parseEventDate(a).getTime();
+    const bTime = parseEventDate(b).getTime();
+    return (Number.isNaN(aTime) ? 0 : aTime) - (Number.isNaN(bTime) ? 0 : bTime);
+  });
+  const featuredEvents = getHomeFeaturedEvents(EVENTS, now);
   const eventTitles = eventsByDateAsc.map((event) => ({
     label: event.displayTitle,
     to: `/events#event-${event.slug}`,

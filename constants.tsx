@@ -64,11 +64,11 @@ export const EVENTS: Event[] = [
     displayTitle: 'LIQUID STATES — DRIPS at Studio dB',
     fullTitle: 'LIQUID STATES — DRIPS at Studio dB',
     slug: 'liquid-states-drips-studio-db',
-    posterSrc: liquidStatesPoster,
-    startDateISO: '2026-02-27T19:00:00+01:00',
+    poster: liquidStatesPoster,
+    startDateTimeISO: '2026-02-27T19:00:00+01:00',
     timeRange: 'Doors open at 19:00h',
-    venue: 'Studio dB',
-    address: 'Uferstrasse 8-11, Studio A14, 13357 Berlin, Germany',
+    venueName: 'Studio dB',
+    venueAddress: 'Uferstrasse 8-11, Studio A14, 13357 Berlin, Germany',
     promoters: ['DRIPS'],
     description:
       'For the first time, DRIPS presents a different kind of night.\n' +
@@ -98,10 +98,11 @@ export const EVENTS: Event[] = [
     displayTitle: 'DRIPS I',
     fullTitle: 'DRIPS I',
     slug: 'drips-i',
-    posterSrc: dripsPosterI,
-    startDateISO: '2025-03-01T23:00:00+01:00',
+    poster: dripsPosterI,
+    startDateTimeISO: '2025-03-01T23:00:00+01:00',
     timeRange: '23:00 - 11:00',
-    venue: 'TBA',
+    venueName: 'TBA',
+    venueAddress: '',
     promoters: ['DRIPS'],
     description:
       'Experience the raw energy of techno with us on a night full of immersive, boundary-pushing sounds. Celebrate chaos, introspection, and the fluid beauty of the underground.\n' +
@@ -114,11 +115,11 @@ export const EVENTS: Event[] = [
     displayTitle: 'DRIPS x LAPSUS',
     fullTitle: 'LAPSUS x DRIPS w/ BIXBITA, Atonism, Schicktanz, EMIRA, AND MORE',
     slug: 'lapsus-x-drips',
-    posterSrc: dripsPosterLapsus,
-    startDateISO: '2025-05-31T23:00:00+02:00',
+    poster: dripsPosterLapsus,
+    startDateTimeISO: '2025-05-31T23:00:00+02:00',
     timeRange: '23:00 - 10:00',
-    venue: 'ÆDEN',
-    address: 'Schleusenufer 2, 10997 Berlin',
+    venueName: 'ÆDEN',
+    venueAddress: 'Schleusenufer 2, 10997 Berlin',
     promoters: ['Lapsus Events', 'DRIPS'],
     description:
       '31st May, AEDEN. Our biggest event to date.\n' +
@@ -131,11 +132,11 @@ export const EVENTS: Event[] = [
     displayTitle: 'DRIPS x CHROMA XXL',
     fullTitle: 'Chroma XXL x DRIPS [2 STAGES INDOOR + GARDEN CHILL OUT]',
     slug: 'chroma-xxl-x-drips',
-    posterSrc: dripsPosterChroma,
-    startDateISO: '2025-09-11T22:00:00+02:00',
+    poster: dripsPosterChroma,
+    startDateTimeISO: '2025-09-11T22:00:00+02:00',
     timeRange: '22:00 - 08:00',
-    venue: 'OXI',
-    address: 'Wiesenweg 1-4, 10365 Berlin',
+    venueName: 'OXI',
+    venueAddress: 'Wiesenweg 1-4, 10365 Berlin',
     promoters: ['OXI Events', 'Chroma Berlin', 'DRIPS'],
     description:
       'CHROMA XXL x DRIPS - 11.09.2025\n\n' +
@@ -152,11 +153,11 @@ export const EVENTS: Event[] = [
     displayTitle: 'DRIPS x VIBRANT',
     fullTitle: 'DRIPS X VIBRANT',
     slug: 'drips-x-vibrant',
-    posterSrc: dripsPosterVibrant,
-    startDateISO: '2025-12-06T23:00:00+01:00',
+    poster: dripsPosterVibrant,
+    startDateTimeISO: '2025-12-06T23:00:00+01:00',
     timeRange: '23:00 - 08:00',
-    venue: 'Lokschuppen Berlin',
-    address: 'Warschauer Brücke, Revaler Straße 99 Zugang über, 10245 Berlin, Germany',
+    venueName: 'Lokschuppen Berlin',
+    venueAddress: 'Warschauer Brücke, Revaler Straße 99 Zugang über, 10245 Berlin, Germany',
     promoters: ['DRIPS'],
     description:
       'From Amsterdam to Berlin, two cities of pulse and power finally meet. Frequencies intertwine, energy converges: this is where the current flows one last time before the year fades.\n' +
