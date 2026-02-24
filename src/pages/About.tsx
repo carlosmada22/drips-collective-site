@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+ï»¿import React, { useEffect, useState } from 'react';
 import aboutBg from '../assets/bg/1v.png';
 import Reveal from '../../components/Reveal';
 import useScrollLock from '../../hooks/useScrollLock';
@@ -87,11 +87,11 @@ const About: React.FC = () => {
         <div className="mt-10 mx-auto max-w-4xl text-left space-y-6 text-lg sm:text-xl md:text-2xl leading-relaxed text-white/90 font-body font-normal text-justify tracking-normal normal-case">
           <Reveal as="p" delay={0}>
             Born in Berlin, DRIPS is a meeting point of disciplines. We create audiovisual works,
-            events, and urban interventions that explore the sensory and the conceptual — through a
+            events, and urban interventions that explore the sensory and the conceptual through a
             liquid, raw, and contemporary aesthetic.
           </Reveal>
           <Reveal as="p" delay={80}>
-            We move through techno and hard groove not just as genres, but as languages — tools to
+            We move through techno and hard groove not just as genres, but as languages tools to
             express tension, release, resistance. Every set becomes a space for something honest.
             Something that sweats, shifts, and refuses to let go.
           </Reveal>
