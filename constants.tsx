@@ -61,8 +61,8 @@ export const SOCIAL_LINKS: SocialLink[] = [
 export const EVENTS: Event[] = [
   {
     id: '5',
-    displayTitle: 'LIQUID STATES — DRIPS at Studio dB',
-    fullTitle: 'LIQUID STATES — DRIPS at Studio dB',
+    displayTitle: 'LIQUID STATES',
+    fullTitle: 'LIQUID STATES',
     slug: 'liquid-states-drips-studio-db',
     poster: liquidStatesPoster,
     startDateTimeISO: '2026-02-27T19:00:00+01:00',

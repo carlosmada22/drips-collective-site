@@ -109,7 +109,7 @@ const Stream: React.FC = () => {
       <section className="py-16">
         <div className="container mx-auto px-6 md:px-12">
           <h2 className="text-xl font-heading tracking-[0.35em] uppercase text-gray-200">
-            SESSIONS
+            THE SESSIONS
           </h2>
           <div className="mt-8 space-y-10">
             {soundCloudSessions.map((session) => (
