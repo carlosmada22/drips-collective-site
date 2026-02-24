@@ -28,7 +28,7 @@ const Accordion: React.FC<{ title: string; children: React.ReactNode }> = ({ tit
       {isOpen && (
         <div
           id={contentId}
-          className="pb-4 text-sm text-gray-300 drips-body font-normal space-y-2 leading-relaxed tracking-normal normal-case"
+          className="pb-4 text-sm text-gray-300 font-body font-normal space-y-2 leading-relaxed tracking-normal normal-case"
         >
           {children}
         </div>
@@ -67,7 +67,7 @@ const Residents: React.FC = () => {
                   <h2 className="text-2xl md:text-3xl font-heading tracking-[0.4em] uppercase">
                     {resident.name}
                   </h2>
-                  <p className="text-sm md:text-base text-gray-300 drips-body font-normal leading-relaxed tracking-normal normal-case text-justify">
+                  <p className="text-sm md:text-base text-gray-300 font-body font-normal leading-relaxed tracking-normal normal-case text-justify">
                     {resident.bio}
                   </p>
                   <div className="mt-6 text-left">

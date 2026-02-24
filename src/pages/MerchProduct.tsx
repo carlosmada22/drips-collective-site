@@ -26,7 +26,7 @@ const MerchProduct: React.FC = () => {
     return (
       <section className="py-24 bg-black text-white">
         <div className="container mx-auto px-6 md:px-12">
-          <p className="text-gray-300 body-copy-font leading-relaxed tracking-normal normal-case">
+          <p className="text-gray-300 font-body leading-relaxed tracking-normal normal-case">
             Merch item not found.
           </p>
           <Link
@@ -101,7 +101,7 @@ const MerchProduct: React.FC = () => {
                 <h1 className="text-3xl md:text-4xl font-heading tracking-[0.3em] uppercase">
                   {product.name}
                 </h1>
-                <p className="mt-3 text-sm text-gray-300 body-copy-font max-w-xl leading-relaxed tracking-normal normal-case">
+                <p className="mt-3 text-sm text-gray-300 font-body max-w-xl leading-relaxed tracking-normal normal-case">
                   {product.description}
                 </p>
                 <p className="mt-4 text-xl tracking-[0.3em] font-heading">{formatPrice(product.priceCents)}</p>

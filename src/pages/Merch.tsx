@@ -38,7 +38,7 @@ const Merch: React.FC = () => {
                   COMING SOON
                 </span>
               </h1>
-              <p className="mt-4 text-sm md:text-base text-gray-300 body-copy-font tracking-normal leading-relaxed normal-case">
+              <p className="mt-4 text-sm md:text-base text-gray-300 font-body tracking-normal leading-relaxed normal-case">
                 We are finalizing our first drops. Follow our Instagram for updates.
               </p>
               <a
@@ -79,7 +79,7 @@ const Merch: React.FC = () => {
             >
               MERCH
             </h1>
-            <p className="mt-4 text-sm md:text-base text-gray-300 body-copy-font tracking-normal leading-relaxed normal-case">
+            <p className="mt-4 text-sm md:text-base text-gray-300 font-body tracking-normal leading-relaxed normal-case">
               Print on demand. Made when you order.
             </p>
           </Reveal>

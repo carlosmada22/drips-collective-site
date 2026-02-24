@@ -21,6 +21,7 @@ import dripsPosterI from './src/assets/events/dripsI.jpg';
 import dripsPosterChroma from './src/assets/events/dripsXchroma.jpg';
 import dripsPosterLapsus from './src/assets/events/dripsXlapsus.jpg';
 import dripsPosterVibrant from './src/assets/events/dripsXvibrant.jpg';
+import liquidStatesPoster from './src/assets/events/liquid_states.jpg';
 
 export const FEATURES = {
   // Set merchEnabled to true to re-enable the full Merch experience.
@@ -58,6 +59,40 @@ export const SOCIAL_LINKS: SocialLink[] = [
 ];
 
 export const EVENTS: Event[] = [
+  {
+    id: '5',
+    displayTitle: 'LIQUID STATES — DRIPS at Studio dB',
+    fullTitle: 'LIQUID STATES — DRIPS at Studio dB',
+    slug: 'liquid-states-drips-studio-db',
+    posterSrc: liquidStatesPoster,
+    startDateISO: '2026-02-27T19:00:00+01:00',
+    timeRange: 'Doors open at 19:00h',
+    venue: 'Studio dB',
+    address: 'Uferstrasse 8-11, Studio A14, 13357 Berlin, Germany',
+    promoters: ['DRIPS'],
+    description:
+      'For the first time, DRIPS presents a different kind of night.\n' +
+      'A night for the community — built on exchange, experimentation, and shared presence.\n\n' +
+      'This is a space where artistic disciplines converge and move together:\n' +
+      'fashion in motion, contemporary dance, live music, vinyl, and immersive visuals unfolding throughout the evening. Each element is part of a continuous dialogue between bodies, sound, and image.\n\n' +
+      'An experience designed for creative encounter and collective energy — where performance and audience meet on the same frequency, and the boundaries between scenes begin to dissolve.\n\n' +
+      'Fashion shows:\n' +
+      'EXIL 01 — https://www.instagram.com/exil___01\n' +
+      'UNSATURATED — https://www.instagram.com/unsaturated.de\n' +
+      'SONNENKIND — https://www.instagram.com/sonnenkind.design\n\n' +
+      'Dance performance:\n' +
+      'FLYING STEPS — https://www.instagram.com/flyingstepsacademy\n\n' +
+      'Visuals:\n' +
+      'FVTHOM — https://www.instagram.com/fvthom.av\n' +
+      'MITΣI — https://www.instagram.com/its.mitsi\n\n' +
+      'Vinyl set:\n' +
+      'DPM JAVI — https://www.instagram.com/dpmjavi\n\n' +
+      'Live sets:\n' +
+      'VOICEX — https://www.instagram.com/voicexmusic\n' +
+      'XIORRO — https://www.instagram.com/xiorro_\n' +
+      'MAURER — https://www.instagram.com/maurer_',
+    raUrl: 'https://es.ra.co/events/2369325',
+  },
   {
     id: '1',
     displayTitle: 'DRIPS I',

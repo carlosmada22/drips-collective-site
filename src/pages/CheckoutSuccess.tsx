@@ -8,7 +8,7 @@ const CheckoutSuccess: React.FC = () => {
       <PageHero title="ORDER CONFIRMED" description="Payment received. Your order is now in Printful fulfillment." />
       <section className="pb-24 bg-black text-white">
         <div className="container mx-auto px-6 md:px-12 space-y-6">
-          <p className="text-gray-300 body-copy-font max-w-2xl leading-relaxed tracking-normal normal-case">
+          <p className="text-gray-300 font-body max-w-2xl leading-relaxed tracking-normal normal-case">
             Thank you for supporting DRIPS. You'll receive a confirmation email with tracking once
             the order ships.
           </p>

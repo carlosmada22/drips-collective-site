@@ -19,7 +19,7 @@ const CookieNotice: React.FC<CookieNoticeProps> = ({
       <p className="text-xs uppercase tracking-[0.35em] font-heading text-white/80">
         {title}
       </p>
-      <p className="text-xs md:text-sm body-copy-font text-white/60 max-w-md leading-relaxed tracking-normal normal-case">
+      <p className="text-xs md:text-sm font-body text-white/60 max-w-md leading-relaxed tracking-normal normal-case">
         {description}
       </p>
       <Link
