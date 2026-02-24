@@ -25,7 +25,7 @@ import liquidStatesPoster from './src/assets/events/liquid_states.jpg';
 
 export const FEATURES = {
   // Set merchEnabled to true to re-enable the full Merch experience.
-  merchEnabled: false,
+  merchEnabled: true,
 } as const;
 
 export const NAV_LINKS: NavLink[] = [
