@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { EVENTS } from '../../constants';
 import { Event } from '../../types';
 import { getOrderedEvents, parseEventDate } from '../utils/events';
+import { fetchRAEvents, mergeEventsWithRA, type RAEvent } from '../lib/raEvents';
 import eventsHero from '../assets/bg/7h.png';
 import Reveal from '../../components/Reveal';
 import EventModal from '../../components/events/EventModal';
@@ -69,8 +70,22 @@ const EventCard: React.FC<{ event: Event; onOpen: (event: Event, trigger: HTMLEl
 
 const Events: React.FC = () => {
   const [activeEvent, setActiveEvent] = useState<Event | null>(null);
+  const [raEvents, setRaEvents] = useState<RAEvent[]>([]);
   const triggerRef = useRef<HTMLElement | null>(null);
-  const { upcoming: upcomingEvents, past: pastEvents } = getOrderedEvents(EVENTS, new Date());
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetchRAEvents(controller.signal).then(setRaEvents);
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+  const allEvents = useMemo(() => mergeEventsWithRA(EVENTS, raEvents), [raEvents]);
+  const { upcoming: upcomingEvents, past: pastEvents } = useMemo(
+    () => getOrderedEvents(allEvents, new Date()),
+    [allEvents]
+  );
 
   const handleOpenModal = (event: Event, trigger: HTMLElement) => {
     triggerRef.current = trigger;

@@ -22,6 +22,7 @@ import dripsPosterChroma from './src/assets/events/dripsXchroma.jpg';
 import dripsPosterLapsus from './src/assets/events/dripsXlapsus.jpg';
 import dripsPosterVibrant from './src/assets/events/dripsXvibrant.jpg';
 import liquidStatesPoster from './src/assets/events/liquid_states.jpg';
+import baalsaalPoster from './src/assets/events/baalsaal.jpg';
 
 export const FEATURES = {
   // Set merchEnabled to true to re-enable the full Merch experience.
@@ -168,6 +169,37 @@ export const EVENTS: Event[] = [
       'Come for the closure.\n' +
       'Stay for the release.',
     raUrl: 'https://es.ra.co/events/2303579',
+  },
+  {
+    id: '6',
+    displayTitle: 'DRIPS Showcase',
+    fullTitle: 'DRIPS Showcase with MAURER, VOICEX & rodmor',
+    slug: 'drips-showcase-baalsaal',
+    poster: baalsaalPoster,
+    startDateTimeISO: '2026-03-13T23:00:00+01:00',
+    timeRange: '23:00 - 06:00',
+    venueName: 'Baalsaal',
+    venueAddress: 'Reeperbahn 25, 20359 Hamburg, Germany',
+    promoters: ['DRIPS'],
+    description:
+      'Baalsaal welcomes Berlin based Drips Collective with spanish rooted artists Maurer & Voicex. Local support by Rodmor\n\n' +
+      'Location: BAALSAAL\n' +
+      'Reeperbahn 25 Hamburg\n\n' +
+      'Date: Friday, March 13th\n' +
+      'Doors Open: 23:00\n\n' +
+      'Free Entry with Ticket till 1am.\n' +
+      'After 1am 10 Euro & Without 20 Euro\n\n' +
+      'No Place for Discrimination:\n' +
+      'We stand for inclusivity and respect.\n' +
+      'No tolerance for homophobia, racism, or sexism.\n\n' +
+      'Stay in the Moment:\n' +
+      'No photos. No videos. Just music, movement and energy.\n\n' +
+      'Lineup:\n' +
+      'MAURER\n' +
+      'VOICEX\n' +
+      'rodmor\n\n' +
+      'See you on the dancefloor.',
+    raUrl: 'https://es.ra.co/events/2378334',
   }
 ];
 

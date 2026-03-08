@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EVENTS } from '../constants';
 import { Event } from '../types';
 import { getHomeFeaturedEvents, parseEventDate } from '../src/utils/events';
+import { fetchRAEvents, mergeEventsWithRA, type RAEvent } from '../src/lib/raEvents';
 import Marquee from './Marquee';
 import Reveal from './Reveal';
 import eventsBg from '../src/assets/bg/10h.png';
@@ -77,13 +78,24 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
 };
 
 const EventsSection: React.FC = () => {
+  const [raEvents, setRaEvents] = useState<RAEvent[]>([]);
   const now = new Date();
-  const eventsByDateAsc = [...EVENTS].sort((a, b) => {
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetchRAEvents(controller.signal).then(setRaEvents);
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+  const mergedEvents = useMemo(() => mergeEventsWithRA(EVENTS, raEvents), [raEvents]);
+  const eventsByDateAsc = [...mergedEvents].sort((a, b) => {
     const aTime = parseEventDate(a).getTime();
     const bTime = parseEventDate(b).getTime();
     return (Number.isNaN(aTime) ? 0 : aTime) - (Number.isNaN(bTime) ? 0 : bTime);
   });
-  const featuredEvents = getHomeFeaturedEvents(EVENTS, now);
+  const featuredEvents = getHomeFeaturedEvents(mergedEvents, now);
   const eventTitles = eventsByDateAsc.map((event) => ({
     label: event.displayTitle,
     to: `/events#event-${event.slug}`,

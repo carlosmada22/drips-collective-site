@@ -5,6 +5,7 @@ import { getShippingRates, createOrder } from './printful.js';
 import { createCheckoutSession, constructStripeEvent } from './stripe.js';
 import { MERCH_CATALOG, findProduct, resolveVariantId, getUnitPrice } from './catalog.js';
 import { storeOrder } from './storage.js';
+import { loadRAEvents, startRASyncScheduler } from './raSync.js';
 
 const app = express();
 const port = Number(process.env.SERVER_PORT || 3001);
@@ -95,6 +96,16 @@ app.use(express.json({ limit: '1mb' }));
 
 app.get('/api/merch/catalog', (_req, res) => {
   res.json(MERCH_CATALOG);
+});
+
+app.get('/api/events-ra', async (_req, res) => {
+  try {
+    const events = await loadRAEvents();
+    res.json({ events });
+  } catch (err) {
+    console.error('Failed to load RA events:', err);
+    res.status(500).json({ error: 'Failed to load RA events.' });
+  }
 });
 
 app.post('/api/printful/shipping-quote', async (req, res) => {
@@ -205,3 +216,5 @@ app.post('/api/stripe/create-checkout-session', async (req, res) => {
 app.listen(port, () => {
   console.log(`Merch server running on http://localhost:${port}`);
 });
+
+startRASyncScheduler();
