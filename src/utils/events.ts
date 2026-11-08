@@ -9,8 +9,13 @@ const getEventTime = (event: Event) => {
   return Number.isNaN(time) ? 0 : time;
 };
 
+const getEventEndTime = (event: Event) => {
+  const time = new Date(event.endDateTimeISO || event.startDateTimeISO).getTime();
+  return Number.isNaN(time) ? getEventTime(event) : time;
+};
+
 export const getEventStatus = (event: Event, now = new Date()) => {
-  return getEventTime(event) >= now.getTime() ? 'upcoming' : 'past';
+  return getEventEndTime(event) >= now.getTime() ? 'upcoming' : 'past';
 };
 
 export const sortUpcoming = (events: Event[], now = new Date()) => {
@@ -22,7 +27,7 @@ export const sortUpcoming = (events: Event[], now = new Date()) => {
 export const sortPast = (events: Event[], now = new Date()) => {
   return events
     .filter((event) => getEventStatus(event, now) === 'past')
-    .sort((a, b) => getEventTime(b) - getEventTime(a));
+    .sort((a, b) => getEventEndTime(b) - getEventEndTime(a));
 };
 
 export const getOrderedEvents = (events: Event[], now = new Date()) => {

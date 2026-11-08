@@ -1,318 +1,202 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import * as cheerio from 'cheerio';
 import cron from 'node-cron';
-import puppeteer from 'puppeteer';
 
-const RA_PROMOTER_URL = 'https://ra.co/promoters/157991';
+const RA_GRAPHQL_URL = 'https://ra.co/graphql';
+const RA_PROMOTER_ID = process.env.RA_PROMOTER_ID || '157991';
 const RA_EVENT_BASE_URL = 'https://ra.co/events';
+const RA_ARCHIVE_START_YEAR = Number(process.env.RA_ARCHIVE_START_YEAR || 2023);
+const RA_SYNC_CRON = process.env.RA_SYNC_CRON || '0 */6 * * *';
+const REQUEST_DELAY_MS = Number(process.env.RA_REQUEST_DELAY_MS || 500);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DATA_DIR = path.join(__dirname, 'data');
 const EVENTS_FILE = path.join(DATA_DIR, 'events_ra.json');
 let schedulerStarted = false;
+let activeSync = null;
 
-const createBrowserFetcher = async () => {
-  const browser = await puppeteer.launch({
-    headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  });
-  const page = await browser.newPage();
+const PROMOTER_EVENTS_QUERY = `
+  query GET_PROMOTER_EVENTS($id: ID!, $type: EventQueryType!, $year: Int) {
+    promoter(id: $id) {
+      id
+      name
+      events(limit: 100, type: $type, year: $year) { id }
+    }
+  }
+`;
 
-  await page.setUserAgent(
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122 Safari/537.36'
-  );
+const EVENT_DETAIL_QUERY = `
+  query GET_EVENT($id: ID!) {
+    event(id: $id) {
+      id title date startTime endTime content contentUrl flyerFront
+      images { filename type }
+      venue { name address area { name } country { name } }
+      area { name }
+      artists { name }
+      promoters { name }
+    }
+  }
+`;
 
-  const fetchHtml = async (url) => {
-    await page.goto(url, {
-      waitUntil: 'networkidle2',
-      timeout: 30000,
+const delay = (ms = REQUEST_DELAY_MS) =>
+  ms > 0 ? new Promise((resolve) => setTimeout(resolve, ms)) : Promise.resolve();
+
+const executeRAQuery = async (query, variables) => {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000);
+  try {
+    const response = await fetch(RA_GRAPHQL_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Referer: 'https://ra.co/',
+        'User-Agent': 'DRIPS event sync (https://www.dripscollective.com)',
+      },
+      body: JSON.stringify({ query, variables }),
+      signal: controller.signal,
     });
-    return page.content();
-  };
-
-  return {
-    fetchHtml,
-    close: async () => {
-      await browser.close();
-    },
-  };
-};
-
-const parseNextData = (html) => {
-  const $ = cheerio.load(html);
-  const scriptContent = $('script#__NEXT_DATA__').html();
-  if (!scriptContent) {
-    throw new Error('Missing __NEXT_DATA__ script');
-  }
-  return JSON.parse(scriptContent);
-};
-
-const findObjectWithKeys = (value, requiredKeys) => {
-  if (!value || typeof value !== 'object') return null;
-  if (requiredKeys.every((key) => key in value)) return value;
-
-  if (Array.isArray(value)) {
-    for (const item of value) {
-      const found = findObjectWithKeys(item, requiredKeys);
-      if (found) return found;
+    if (!response.ok) throw new Error(`RA request failed with HTTP ${response.status}`);
+    const payload = await response.json();
+    if (payload.errors?.length) {
+      throw new Error(payload.errors.map((error) => error.message).join('; '));
     }
-    return null;
+    return payload.data || {};
+  } finally {
+    clearTimeout(timeout);
   }
-
-  for (const nested of Object.values(value)) {
-    const found = findObjectWithKeys(nested, requiredKeys);
-    if (found) return found;
-  }
-
-  return null;
-};
-
-const collectEventIds = (value, bucket = new Set()) => {
-  if (!value) return bucket;
-
-  if (Array.isArray(value)) {
-    value.forEach((entry) => collectEventIds(entry, bucket));
-    return bucket;
-  }
-
-  if (typeof value !== 'object') {
-    if (typeof value === 'string') {
-      const id = getEventIdFromLink(value);
-      if (id) bucket.add(id);
-    }
-    return bucket;
-  }
-
-  Object.values(value).forEach((entry) => collectEventIds(entry, bucket));
-  return bucket;
 };
 
 const pickFirstString = (...values) => {
   for (const value of values) {
-    if (typeof value === 'string' && value.trim()) {
-      return value.trim();
-    }
+    if (typeof value === 'string' && value.trim()) return value.trim();
   }
   return '';
 };
 
-const delay = (ms = 1500) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const getEventIdFromLink = (value = '') => value.match(/\/events\/(\d+)/i)?.[1] || null;
-
-const normalizePoster = (value = '') => {
-  if (!value) return '';
-  if (value.startsWith('//')) return `https:${value}`;
-  if (value.startsWith('/')) return `https://ra.co${value}`;
-  return value;
-};
-
-const normalizeDate = (value = '') => {
-  const parsed = new Date(value);
-  return Number.isNaN(parsed.getTime()) ? value : parsed.toISOString();
-};
-
 const slugify = (value = '') =>
-  value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '');
+  value.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 64);
 
-const parsePromoters = (text = '') => {
-  const chunks = text
-    .split(/,|•|·|\||\//g)
-    .map((entry) => entry.replace(/\s+/g, ' ').trim())
+const normalizePoster = (eventNode = {}) => {
+  const images = Array.isArray(eventNode.images) ? eventNode.images : [];
+  const front = images.find((image) => image?.type === 'FLYERFRONT');
+  return pickFirstString(front?.filename, eventNode.flyerFront, images[0]?.filename);
+};
+
+const formatTime = (value = '') => {
+  const match = value.match(/T(\d{2}):(\d{2})/);
+  return match ? `${match[1]}:${match[2]}` : '';
+};
+
+const buildTimeRange = (startTime = '', endTime = '') => {
+  const start = formatTime(startTime);
+  const end = formatTime(endTime);
+  if (start && end) return `${start} - ${end}`;
+  return start || end || 'Check RA for schedule';
+};
+
+const buildDescription = (eventNode = {}) => {
+  const content = pickFirstString(eventNode.content);
+  const lineup = (eventNode.artists || []).map((artist) => pickFirstString(artist?.name))
+    .filter(Boolean).join(', ');
+  if (content && lineup && !content.toLowerCase().includes('lineup')) {
+    return `${content}\n\nLineup: ${lineup}`;
+  }
+  return content || (lineup ? `Lineup: ${lineup}` : 'See Resident Advisor for event details.');
+};
+
+const mapRAEvent = (eventNode) => {
+  const id = String(eventNode?.id || '');
+  const title = pickFirstString(eventNode?.title, `RA Event ${id}`);
+  const venue = eventNode?.venue || {};
+  const city = pickFirstString(venue.area?.name, eventNode?.area?.name);
+  const country = pickFirstString(venue.country?.name);
+  const cityCountry = [city, country].filter(Boolean).join(', ');
+  const promoters = (eventNode?.promoters || []).map((promoter) => pickFirstString(promoter?.name))
     .filter(Boolean);
-  const unique = new Set(['DRIPS']);
-  chunks.forEach((entry) => unique.add(entry));
-  return Array.from(unique);
-};
+  const raUrl = `${RA_EVENT_BASE_URL}/${id}`;
+  const startDateTimeISO = pickFirstString(eventNode.startTime, eventNode.date);
 
-const pickVenueName = (eventNode = {}) => {
-  const venue = eventNode.venue || eventNode.location || {};
-  return pickFirstString(eventNode.venueName, venue.name, venue.title, eventNode.club?.name);
-};
-
-const pickVenueAddress = (eventNode = {}) => {
-  const venue = eventNode.venue || eventNode.location || {};
-  const address = venue.address || {};
-  return pickFirstString(
-    eventNode.venueAddress,
-    venue.address,
-    address.streetAddress,
-    address.addressLocality,
-    address.name
-  );
-};
-
-const pickCity = (eventNode = {}) => {
-  const venue = eventNode.venue || eventNode.location || {};
-  const address = venue.address || {};
-  return pickFirstString(eventNode.city, venue.city, address.addressLocality);
-};
-
-const pickLineup = (eventNode = {}) => {
-  const artists = Array.isArray(eventNode.artists) ? eventNode.artists : [];
-  if (!artists.length) return '';
-  return artists
-    .map((artist) => pickFirstString(artist?.name, artist?.title))
-    .filter(Boolean)
-    .join(', ');
-};
-
-const extractEventFromNextData = (jsonData) => {
-  const pageProps = jsonData?.props?.pageProps || {};
-  return (
-    pageProps?.event ||
-    pageProps?.data?.event ||
-    findObjectWithKeys(pageProps, ['id', 'title']) ||
-    {}
-  );
-};
-
-const pickPoster = (eventNode = {}, pageProps = {}) => {
-  const image = eventNode.image || eventNode.images?.[0] || {};
-  const openGraph = pageProps?.openGraph || pageProps?.seo || {};
-  return normalizePoster(
-    pickFirstString(image.url, image.src, eventNode.poster, openGraph.image, openGraph.imageUrl)
-  );
-};
-
-const buildDescription = (eventNode = {}, lineup = '') => {
-  const description = pickFirstString(
-    eventNode.content,
-    eventNode.description,
-    eventNode.summary,
-    eventNode.blurb
-  );
-
-  if (description && lineup) {
-    return `${description}\n\nLineup: ${lineup}`;
-  }
-
-  return description || (lineup ? `Lineup: ${lineup}` : '');
-};
-
-const extractEventIdsFromPromoter = async (fetchHtml) => {
-  const html = await fetchHtml(RA_PROMOTER_URL);
-
-  try {
-    const jsonData = parseNextData(html);
-    const idsFromJson = Array.from(collectEventIds(jsonData?.props?.pageProps));
-    if (idsFromJson.length > 0) {
-      return idsFromJson;
-    }
-  } catch {
-    // Fall back to anchor extraction.
-  }
-
-  const $ = cheerio.load(html);
-  const ids = new Set();
-
-  $('a[href*="/events/"]').each((_, element) => {
-    const href = $(element).attr('href') || '';
-    const id = getEventIdFromLink(href);
-    if (id) {
-      ids.add(id);
-    }
-  });
-
-  return Array.from(ids);
-};
-
-const scrapeEventPage = async (eventId, fetchHtml) => {
-  const url = `${RA_EVENT_BASE_URL}/${eventId}`;
-  const html = await fetchHtml(url);
-  const jsonData = parseNextData(html);
-  const pageProps = jsonData?.props?.pageProps || {};
-  const eventNode = extractEventFromNextData(jsonData);
-
-  const title = pickFirstString(eventNode.title, eventNode.name, pageProps?.title);
-  const dateRaw = pickFirstString(
-    eventNode.date,
-    eventNode.startDate,
-    eventNode.startTime,
-    eventNode.startsAt
-  );
-  const lineup = pickLineup(eventNode);
-  const poster = pickPoster(eventNode, pageProps);
-  const venueName = pickVenueName(eventNode);
-  const venueAddress = pickVenueAddress(eventNode);
-  const city = pickCity(eventNode);
-  const description = buildDescription(eventNode, lineup);
-
-  const promotersRaw = pickFirstString(
-    eventNode.promoterName,
-    eventNode.promoter?.name,
-    eventNode.promoters?.map?.((p) => p?.name).filter(Boolean).join(', ')
-  );
-
-  const promoters = parsePromoters(promotersRaw);
-  const isoDate = normalizeDate(dateRaw);
-  const safeTitle = title || `RA Event ${eventId}`;
-  const safeSlug = slugify(safeTitle) || `ra-event-${eventId}`;
-
-  // Keep both DRIPS Event fields and legacy RA fields for compatibility.
   return {
-    id: eventId,
-    displayTitle: safeTitle,
-    fullTitle: safeTitle,
-    slug: safeSlug,
-    poster,
-    startDateTimeISO: isoDate,
-    timeRange: '',
-    venueName: venueName || '',
-    venueAddress: venueAddress || '',
-    promoters,
-    description: description || '',
-    raUrl: `${RA_EVENT_BASE_URL}/${eventId}`,
-    title: safeTitle,
-    date: isoDate,
-    venue: venueName || '',
-    city,
-    raLink: `${RA_EVENT_BASE_URL}/${eventId}`,
+    id,
+    source: 'resident-advisor',
+    displayTitle: title,
+    fullTitle: title,
+    slug: `ra-${id}-${slugify(title) || 'event'}`,
+    poster: normalizePoster(eventNode),
+    startDateTimeISO,
+    endDateTimeISO: pickFirstString(eventNode.endTime) || undefined,
+    timeRange: buildTimeRange(eventNode.startTime, eventNode.endTime),
+    venueName: pickFirstString(venue.name, 'TBA'),
+    venueAddress: pickFirstString(venue.address),
+    cityCountry: cityCountry || undefined,
+    promoters: promoters.length ? promoters : ['DRIPS'],
+    description: buildDescription(eventNode),
+    raUrl,
+    lastSyncedAt: new Date().toISOString(),
+    title,
+    date: startDateTimeISO,
+    venue: pickFirstString(venue.name, 'TBA'),
+    city: cityCountry,
+    raLink: raUrl,
   };
 };
 
-export const scrapeRAEvents = async () => {
-  const { fetchHtml, close } = await createBrowserFetcher();
+const getPromoterEventIds = async () => {
+  const ids = new Set();
+  const currentYear = new Date().getUTCFullYear();
+  const latestData = await executeRAQuery(PROMOTER_EVENTS_QUERY, {
+    id: RA_PROMOTER_ID, type: 'LATEST', year: null,
+  });
+  if (!latestData.promoter) throw new Error(`RA promoter ${RA_PROMOTER_ID} was not found`);
+  latestData.promoter.events?.forEach((event) => event?.id && ids.add(String(event.id)));
 
-  try {
-    const eventIds = await extractEventIdsFromPromoter(fetchHtml);
-    const events = [];
-
-    for (const eventId of eventIds) {
-      try {
-        const event = await scrapeEventPage(eventId, fetchHtml);
-        events.push(event);
-      } catch (error) {
-        console.error(`[RA Sync] Failed to scrape event ${eventId}:`, error.message);
-      }
-      await delay(1500);
-    }
-
-    return events;
-  } finally {
-    await close();
+  for (let year = RA_ARCHIVE_START_YEAR; year <= currentYear; year += 1) {
+    const archiveData = await executeRAQuery(PROMOTER_EVENTS_QUERY, {
+      id: RA_PROMOTER_ID, type: 'ARCHIVE', year,
+    });
+    archiveData.promoter?.events?.forEach((event) => event?.id && ids.add(String(event.id)));
+    await delay();
   }
+  if (ids.size === 0) throw new Error('RA returned no events; preserving the existing cache');
+  return Array.from(ids);
+};
+
+const fetchEventDetail = async (eventId) => {
+  const data = await executeRAQuery(EVENT_DETAIL_QUERY, { id: eventId });
+  if (!data.event?.id) throw new Error(`RA event ${eventId} was not found`);
+  return mapRAEvent(data.event);
+};
+
+export const scrapeRAEvents = async () => {
+  const eventIds = await getPromoterEventIds();
+  const events = [];
+  const failedIds = [];
+  for (const eventId of eventIds) {
+    try {
+      events.push(await fetchEventDetail(eventId));
+    } catch (error) {
+      failedIds.push(eventId);
+      console.error(`[RA Sync] Failed to fetch event ${eventId}:`, error.message);
+    }
+    await delay();
+  }
+  if (events.length === 0) {
+    throw new Error('RA event detail requests all failed; preserving the existing cache');
+  }
+  return { events, eventIds, failedIds };
 };
 
 const ensureDataFile = async () => {
   await fs.mkdir(DATA_DIR, { recursive: true });
-  try {
-    await fs.access(EVENTS_FILE);
-  } catch {
-    await fs.writeFile(EVENTS_FILE, '[]\n', 'utf-8');
-  }
+  try { await fs.access(EVENTS_FILE); } catch { await fs.writeFile(EVENTS_FILE, '[]\n', 'utf-8'); }
 };
 
 export const loadRAEvents = async () => {
   await ensureDataFile();
   try {
-    const content = await fs.readFile(EVENTS_FILE, 'utf-8');
-    const parsed = JSON.parse(content);
+    const parsed = JSON.parse(await fs.readFile(EVENTS_FILE, 'utf-8'));
     return Array.isArray(parsed) ? parsed : [];
   } catch (error) {
     console.error('Failed to read RA events JSON:', error);
@@ -320,39 +204,53 @@ export const loadRAEvents = async () => {
   }
 };
 
-export const syncRAEvents = async () => {
-  await ensureDataFile();
+const writeEventsAtomically = async (events) => {
+  const temporaryFile = `${EVENTS_FILE}.tmp`;
+  await fs.writeFile(temporaryFile, `${JSON.stringify(events, null, 2)}\n`, 'utf-8');
+  await fs.rename(temporaryFile, EVENTS_FILE);
+};
 
+const performSync = async () => {
   const existingEvents = await loadRAEvents();
-  const latestEvents = await scrapeRAEvents();
-  const existingIds = new Set(existingEvents.map((event) => String(event.id)));
-  const newEvents = latestEvents.filter((event) => event?.id && !existingIds.has(String(event.id)));
-  const merged = [...existingEvents, ...newEvents];
+  const existingById = new Map(existingEvents.map((event) => [String(event.id), event]));
+  const { events: fetchedEvents, eventIds, failedIds } = await scrapeRAEvents();
+  const fetchedById = new Map(fetchedEvents.map((event) => [String(event.id), event]));
+  failedIds.forEach((id) => {
+    const existing = existingById.get(String(id));
+    if (existing) fetchedById.set(String(id), existing);
+  });
+  const reconciled = eventIds.map((id) => fetchedById.get(String(id))).filter(Boolean)
+    .sort((a, b) => new Date(a.startDateTimeISO).getTime() - new Date(b.startDateTimeISO).getTime());
+  const added = reconciled.filter((event) => !existingById.has(String(event.id))).length;
+  const updated = reconciled.filter((event) => {
+    const existing = existingById.get(String(event.id));
+    if (!existing) return false;
+    const { lastSyncedAt: _oldSync, ...oldComparable } = existing;
+    const { lastSyncedAt: _newSync, ...newComparable } = event;
+    return JSON.stringify(oldComparable) !== JSON.stringify(newComparable);
+  }).length;
+  const removed = existingEvents.filter((event) => !eventIds.includes(String(event.id))).length;
+  await writeEventsAtomically(reconciled);
+  return { total: reconciled.length, added, updated, removed, failed: failedIds.length };
+};
 
-  await fs.writeFile(EVENTS_FILE, `${JSON.stringify(merged, null, 2)}\n`, 'utf-8');
-  return { total: merged.length, added: newEvents.length };
+export const syncRAEvents = async () => {
+  if (activeSync) return activeSync;
+  activeSync = performSync().finally(() => { activeSync = null; });
+  return activeSync;
+};
+
+const logSyncResult = (label, result) => {
+  console.log(`[RA Sync] ${label}. Added ${result.added}, updated ${result.updated}, removed ${result.removed}, failed ${result.failed}, total ${result.total}.`);
 };
 
 export const startRASyncScheduler = () => {
-  if (schedulerStarted) {
-    return;
-  }
+  if (schedulerStarted || process.env.RA_SYNC_ENABLED === 'false') return;
   schedulerStarted = true;
-
-  syncRAEvents()
-    .then((result) => {
-      console.log(`[RA Sync] Initial sync complete. Added ${result.added}, total ${result.total}.`);
-    })
-    .catch((error) => {
-      console.error('[RA Sync] Initial sync failed:', error.message);
-    });
-
-  cron.schedule('0 */6 * * *', async () => {
-    try {
-      const result = await syncRAEvents();
-      console.log(`[RA Sync] Scheduled sync complete. Added ${result.added}, total ${result.total}.`);
-    } catch (error) {
-      console.error('[RA Sync] Scheduled sync failed:', error.message);
-    }
+  syncRAEvents().then((result) => logSyncResult('Initial sync complete', result))
+    .catch((error) => console.error('[RA Sync] Initial sync failed:', error.message));
+  cron.schedule(RA_SYNC_CRON, async () => {
+    try { logSyncResult('Scheduled sync complete', await syncRAEvents()); }
+    catch (error) { console.error('[RA Sync] Scheduled sync failed:', error.message); }
   });
 };
