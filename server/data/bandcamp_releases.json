@@ -1,0 +1,29 @@
+[
+  {
+    "id": "3503497890",
+    "slug": "alterego-ep",
+    "title": "Alterego EP",
+    "artist": "DRIPS",
+    "artwork": "https://f4.bcbits.com/img/a1636362880_2.jpg",
+    "url": "https://dripslabel.bandcamp.com/album/alterego-ep",
+    "embedSrc": "https://bandcamp.com/EmbeddedPlayer/album=3503497890/size=large/bgcol=000000/linkcol=ffffff/tracklist=true/transparent=true/"
+  },
+  {
+    "id": "2636254131",
+    "slug": "sintetika",
+    "title": "SINTETIKA",
+    "artist": "K-H1",
+    "artwork": "https://f4.bcbits.com/img/a1065469596_2.jpg",
+    "url": "https://dripslabel.bandcamp.com/album/sintetika",
+    "embedSrc": "https://bandcamp.com/EmbeddedPlayer/album=2636254131/size=large/bgcol=000000/linkcol=ffffff/tracklist=true/transparent=true/"
+  },
+  {
+    "id": "657721235",
+    "slug": "convergence",
+    "title": "CONVERGENCE",
+    "artist": "Various Artists",
+    "artwork": "https://f4.bcbits.com/img/a3488023407_2.jpg",
+    "url": "https://dripslabel.bandcamp.com/album/convergence",
+    "embedSrc": "https://bandcamp.com/EmbeddedPlayer/album=657721235/size=large/bgcol=000000/linkcol=ffffff/tracklist=true/transparent=true/"
+  }
+]

@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "server": "node server/index.js",
-    "sync:ra": "node server/syncRAEvents.js"
+    "sync:ra": "node server/syncRAEvents.js",
+    "sync:bandcamp": "node server/syncBandcampReleases.js"
   },
   "dependencies": {
     "@stripe/stripe-js": "^7.9.0",

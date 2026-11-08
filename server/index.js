@@ -6,6 +6,7 @@ import { createCheckoutSession, constructStripeEvent } from './stripe.js';
 import { MERCH_CATALOG, findProduct, resolveVariantId, getUnitPrice } from './catalog.js';
 import { storeOrder } from './storage.js';
 import { loadRAEvents, startRASyncScheduler } from './raSync.js';
+import { loadBandcampReleases } from './bandcampSync.js';
 
 const app = express();
 const port = Number(process.env.SERVER_PORT || 3001);
@@ -105,6 +106,16 @@ app.get('/api/events-ra', async (_req, res) => {
   } catch (err) {
     console.error('Failed to load RA events:', err);
     res.status(500).json({ error: 'Failed to load RA events.' });
+  }
+});
+
+app.get('/api/bandcamp-releases', async (_req, res) => {
+  try {
+    const releases = await loadBandcampReleases();
+    res.json({ releases });
+  } catch (err) {
+    console.error('Failed to load Bandcamp releases:', err);
+    res.status(500).json({ error: 'Failed to load Bandcamp releases.' });
   }
 });
 
