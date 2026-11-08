@@ -171,17 +171,27 @@ const fetchEventDetail = async (eventId) => {
 
 export const scrapeRAEvents = async () => {
   const eventIds = await getPromoterEventIds();
-  const events = [];
+  const eventResults = new Array(eventIds.length);
   const failedIds = [];
-  for (const eventId of eventIds) {
-    try {
-      events.push(await fetchEventDetail(eventId));
-    } catch (error) {
-      failedIds.push(eventId);
-      console.error(`[RA Sync] Failed to fetch event ${eventId}:`, error.message);
+
+  let nextIndex = 0;
+  const worker = async () => {
+    while (nextIndex < eventIds.length) {
+      const index = nextIndex;
+      nextIndex += 1;
+      const eventId = eventIds[index];
+      try {
+        eventResults[index] = await fetchEventDetail(eventId);
+      } catch (error) {
+        failedIds.push(eventId);
+        console.error(`[RA Sync] Failed to fetch event ${eventId}:`, error.message);
+      }
+      await delay();
     }
-    await delay();
-  }
+  };
+
+  await Promise.all(Array.from({ length: Math.min(3, eventIds.length) }, worker));
+  const events = eventResults.filter(Boolean);
   if (events.length === 0) {
     throw new Error('RA event detail requests all failed; preserving the existing cache');
   }
