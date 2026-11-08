@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import SoundCloudEmbed from '../../components/SoundCloudEmbed';
 import CookieNotice from '../../components/CookieNotice';
 import useCookieConsent from '../../hooks/useCookieConsent';
@@ -15,7 +15,15 @@ type SoundCloudWidget = {
   pause: () => void;
 };
 
-const soundCloudSessions = [
+type SoundCloudTrack = {
+  id: string;
+  title: string;
+  url: string;
+  embedUrl: string;
+  publishedAt?: string;
+};
+
+const fallbackSoundCloudSessions = [
   {
     title: 'CONVERGENCE VA',
     trackUrl: 'https://soundcloud.com/drips-collective/sets/convergence-va-drips001',
@@ -49,6 +57,14 @@ const buildSoundCloudEmbedUrl = (trackUrl: string) =>
 const Stream: React.FC = () => {
   const soundCloudWidgetsRef = useRef<SoundCloudWidget[]>([]);
   const { isAccepted } = useCookieConsent();
+  const [soundCloudSessions, setSoundCloudSessions] = useState<SoundCloudTrack[]>(
+    fallbackSoundCloudSessions.map((session) => ({
+      id: session.trackUrl,
+      title: session.title,
+      url: session.trackUrl,
+      embedUrl: buildSoundCloudEmbedUrl(session.trackUrl),
+    }))
+  );
 
   const pauseAllSoundCloud = useCallback((except?: SoundCloudWidget) => {
     soundCloudWidgetsRef.current.forEach((widget) => {
@@ -74,6 +90,21 @@ const Stream: React.FC = () => {
     },
     [pauseAllSoundCloud]
   );
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch('/api/media-feed', { signal: controller.signal })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data) => {
+        if (Array.isArray(data?.tracks) && data.tracks.length > 0) {
+          setSoundCloudSessions(data.tracks.slice(0, 3));
+        }
+      })
+      .catch(() => {
+        // Keep the bundled fallback sessions when the media feed is unavailable.
+      });
+    return () => controller.abort();
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -113,13 +144,13 @@ const Stream: React.FC = () => {
           </h2>
           <div className="mt-8 space-y-10">
             {soundCloudSessions.map((session) => (
-              <div key={session.trackUrl} className="space-y-3">
+              <div key={session.id} className="space-y-3">
                 <p className="text-xs font-mono tracking-[0.35em] text-gray-400 uppercase">
                   {session.title}
                 </p>
                 <SoundCloudEmbed
                   title={session.title}
-                  url={buildSoundCloudEmbedUrl(session.trackUrl)}
+                  url={session.embedUrl}
                   registerWidget={registerSoundCloudWidget}
                   onPlay={handleSoundCloudPlay}
                 />

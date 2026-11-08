@@ -29,7 +29,7 @@ const Label: React.FC = () => {
 
   useEffect(() => {
     const controller = new AbortController();
-    fetch('/api/bandcamp-releases', { signal: controller.signal })
+    fetch('/api/media-feed', { signal: controller.signal })
       .then((response) => (response.ok ? response.json() : null))
       .then((data) => {
         if (Array.isArray(data?.releases) && data.releases.length > 0) {

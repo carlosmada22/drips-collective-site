@@ -7,6 +7,7 @@ import { MERCH_CATALOG, findProduct, resolveVariantId, getUnitPrice } from './ca
 import { storeOrder } from './storage.js';
 import { loadRAEvents, startRASyncScheduler } from './raSync.js';
 import { loadBandcampReleases } from './bandcampSync.js';
+import { loadSoundCloudTracks } from './soundcloudSync.js';
 
 const app = express();
 const port = Number(process.env.SERVER_PORT || 3001);
@@ -116,6 +117,19 @@ app.get('/api/bandcamp-releases', async (_req, res) => {
   } catch (err) {
     console.error('Failed to load Bandcamp releases:', err);
     res.status(500).json({ error: 'Failed to load Bandcamp releases.' });
+  }
+});
+
+app.get('/api/media-feed', async (_req, res) => {
+  try {
+    const [releases, tracks] = await Promise.all([
+      loadBandcampReleases(),
+      loadSoundCloudTracks(),
+    ]);
+    res.json({ releases, tracks });
+  } catch (err) {
+    console.error('Failed to load media feeds:', err);
+    res.status(500).json({ error: 'Failed to load media feeds.' });
   }
 });
 

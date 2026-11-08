@@ -6,7 +6,7 @@
       "schedule": "0 6 * * *"
     },
     {
-      "path": "/api/bandcamp-releases",
+      "path": "/api/media-feed",
       "schedule": "15 6 * * *"
     }
   ],
